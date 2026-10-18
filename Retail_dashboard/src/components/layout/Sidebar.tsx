@@ -9,7 +9,6 @@ import {
   ChevronRight,
   DatabaseZap,
   PanelLeftClose,
-  PanelLeftOpen,
   X,
 } from 'lucide-react';
 import { BlueMartLogo } from '../ui/BlueMartLogo';
@@ -74,11 +73,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
       >
         <div>
           {/* Brand Header */}
-          <div className="p-4 border-b border-[#E2DDD2] dark:border-slate-800/80 flex items-center justify-between">
+          <div
+            className={`border-b border-[#E2DDD2] dark:border-slate-800/80 flex items-center transition-all ${
+              isCollapsed ? 'justify-center p-3.5' : 'justify-between p-4'
+            }`}
+          >
             <button
-              onClick={() => handleNavClick('overview')}
+              onClick={() => {
+                if (isCollapsed) {
+                  setIsCollapsed(false);
+                } else {
+                  handleNavClick('overview');
+                }
+              }}
               className="group flex items-center gap-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-xl cursor-pointer"
-              title="BlueMart Retail Intelligence"
+              title={isCollapsed ? 'Click to expand sidebar' : 'BlueMart Retail Intelligence'}
+              aria-label={isCollapsed ? 'Click to expand sidebar' : 'BlueMart Retail Intelligence'}
             >
               <BlueMartLogo size={38} className="w-9.5 h-9.5" />
               {!isCollapsed && (
@@ -94,19 +104,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
               )}
             </button>
 
-            {/* Desktop Collapse Toggle */}
-            <button
-              onClick={() => setIsCollapsed(!isCollapsed)}
-              className="hidden lg:flex p-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-[#EAE5DC] dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 cursor-pointer"
-              title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-              aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-            >
-              {isCollapsed ? (
-                <PanelLeftOpen className="w-4 h-4" />
-              ) : (
+            {/* Desktop Collapse Toggle - visible only when expanded */}
+            {!isCollapsed && (
+              <button
+                onClick={() => setIsCollapsed(true)}
+                className="hidden lg:flex p-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-[#EAE5DC] dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 cursor-pointer"
+                title="Collapse sidebar"
+                aria-label="Collapse sidebar"
+              >
                 <PanelLeftClose className="w-4 h-4" />
-              )}
-            </button>
+              </button>
+            )}
 
             {/* Mobile Close Button */}
             <button
