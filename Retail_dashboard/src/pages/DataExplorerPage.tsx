@@ -139,7 +139,7 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
             onClick={() => setView('sales')}
             className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               view === 'sales'
-                ? 'bg-indigo-600 text-white shadow-sm'
+                ? 'bg-blue-600 text-white shadow-sm'
                 : 'text-slate-700 hover:text-slate-950 dark:text-slate-400 dark:hover:text-slate-200'
             }`}
           >
@@ -149,7 +149,7 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
             onClick={() => setView('inventory')}
             className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               view === 'inventory'
-                ? 'bg-indigo-600 text-white shadow-sm'
+                ? 'bg-blue-600 text-white shadow-sm'
                 : 'text-slate-700 hover:text-slate-950 dark:text-slate-400 dark:hover:text-slate-200'
             }`}
           >
@@ -174,7 +174,7 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
                 <option value="Normal">Normal</option>
                 <option value="Overstocked">Overstocked (&gt; 3x Reorder)</option>
               </select>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 absolute right-2.5 pointer-events-none" />
+              <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
           )}
 

@@ -97,7 +97,7 @@ export const StoreCategoryPage: React.FC<StoreCategoryPageProps> = ({ filters })
                   formatter={(val: unknown) => [Number(val).toLocaleString(), '']}
                 />
                 <Legend />
-                <Bar dataKey="revenue" name="Revenue" fill="#6366f1" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="revenue" name="Revenue" fill="#2563EB" radius={[4, 4, 0, 0]} />
                 <Bar dataKey="profit" name="Profit" fill="#10b981" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
@@ -133,7 +133,7 @@ export const StoreCategoryPage: React.FC<StoreCategoryPageProps> = ({ filters })
                   formatter={(val: unknown) => [Number(val).toLocaleString(), '']}
                 />
                 <Legend />
-                <Bar dataKey="revenue" name="Revenue" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="revenue" name="Revenue" fill="#3B82F6" radius={[4, 4, 0, 0]} />
                 <Bar dataKey="profit" name="Profit" fill="#06b6d4" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>

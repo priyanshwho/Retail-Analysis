@@ -93,9 +93,10 @@ export const App: React.FC = () => {
     setFilters({});
   };
 
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     setIsLoading(true);
     setError(null);
+    await api.clearCache();
     loadOverview();
   };
 

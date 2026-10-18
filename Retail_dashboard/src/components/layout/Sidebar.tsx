@@ -141,7 +141,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     isCollapsed ? 'justify-center px-2 py-3' : 'justify-between px-3.5 py-2.5'
                   } rounded-xl text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 cursor-pointer ${
                     isActive
-                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-indigo-600/25 border border-indigo-500/40 font-semibold'
+                      ? 'bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md shadow-blue-600/25 border border-blue-400/40 font-semibold'
                       : 'text-slate-700 hover:text-slate-950 hover:bg-[#DCE7F3] dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800/60'
                   }`}
                 >
@@ -156,7 +156,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                           {item.badge}
                         </span>
                       )}
-                      {isActive && <ChevronRight className="w-3.5 h-3.5 text-indigo-200" />}
+                      {isActive && <ChevronRight className="w-3.5 h-3.5 text-blue-100" />}
                     </div>
                   )}
                 </button>

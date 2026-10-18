@@ -147,8 +147,8 @@ export const ParetoPage: React.FC<ParetoPageProps> = ({ filters }) => {
                 type="monotone"
                 dataKey="cumPct"
                 name="Cumulative %"
-                stroke="#6366f1"
-                fill="#6366f1"
+                stroke="#2563EB"
+                fill="#2563EB"
                 fillOpacity={0.15}
                 strokeWidth={2.5}
               />

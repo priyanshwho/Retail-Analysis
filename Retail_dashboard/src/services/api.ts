@@ -29,35 +29,93 @@ function buildQuery(params?: Record<string, string | number | undefined | null>)
   return queryString ? `?${queryString}` : '';
 }
 
-async function request<T>(endpoint: string, params?: Record<string, string | number | boolean | undefined | null>): Promise<T> {
+interface CacheEntry<T> {
+  data: T;
+  expiry: number;
+}
+
+const memoryCache = new Map<string, CacheEntry<unknown>>();
+const pendingRequests = new Map<string, Promise<unknown>>();
+const DEFAULT_TTL_MS = 5 * 60 * 1000; // 5 minutes cache
+
+async function request<T>(
+  endpoint: string,
+  params?: Record<string, string | number | boolean | undefined | null>,
+  options?: { bypassCache?: boolean; ttlMs?: number }
+): Promise<T> {
   const url = `${BASE_URL}${endpoint}${buildQuery(params as Record<string, string | number | undefined | null>)}`;
-  const res = await fetch(url);
-  if (!res.ok) {
-    const errorText = await res.text();
-    throw new Error(`API error ${res.status}: ${errorText || res.statusText}`);
+  const now = Date.now();
+
+  // Return instant cached response if valid
+  if (!options?.bypassCache && memoryCache.has(url)) {
+    const entry = memoryCache.get(url)!;
+    if (now < entry.expiry) {
+      return entry.data as T;
+    }
+    memoryCache.delete(url);
   }
-  return res.json();
+
+  // Deduplicate concurrent in-flight requests for the same URL
+  if (!options?.bypassCache && pendingRequests.has(url)) {
+    return pendingRequests.get(url) as Promise<T>;
+  }
+
+  const reqPromise = (async () => {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(`API error ${res.status}: ${errorText || res.statusText}`);
+      }
+      const data: T = await res.json();
+      const ttl = options?.ttlMs ?? DEFAULT_TTL_MS;
+      memoryCache.set(url, { data, expiry: Date.now() + ttl });
+      return data;
+    } finally {
+      pendingRequests.delete(url);
+    }
+  })();
+
+  pendingRequests.set(url, reqPromise);
+  return reqPromise;
 }
 
 export const api = {
-  getHealth: () => request<HealthStatus>('/api/health'),
-  getOverview: (filters?: ActiveFilters) => request<DashboardOverview>('/api/dashboard/overview', filters as Record<string, string | number | undefined>),
-  getSalesTrend: (granularity: 'day' | 'week' | 'month' | 'year' = 'month', filters?: ActiveFilters) =>
-    request<{ granularity: string; data: SalesTrendPoint[] }>('/api/analytics/sales-trend', {
-      granularity,
-      ...filters,
-    }),
-  getCategoryPerformance: (filters?: ActiveFilters) =>
-    request<CategoryPerformanceItem[]>('/api/analytics/category-performance', filters as Record<string, string | number | undefined>),
-  getStorePerformance: (filters?: ActiveFilters) =>
+  clearCache: async () => {
+    memoryCache.clear();
+    pendingRequests.clear();
+    try {
+      await fetch(`${BASE_URL}/api/cache/clear`, { method: 'POST' });
+    } catch {
+      // ignore
+    }
+  },
+  getHealth: () => request<HealthStatus>('/api/health', undefined, { ttlMs: 30 * 1000 }),
+  getOverview: (filters?: ActiveFilters, bypassCache = false) =>
+    request<DashboardOverview>('/api/dashboard/overview', filters as Record<string, string | number | undefined>, { bypassCache }),
+  getSalesTrend: (granularity: 'day' | 'week' | 'month' | 'year' = 'month', filters?: ActiveFilters, bypassCache = false) =>
+    request<{ granularity: string; data: SalesTrendPoint[] }>(
+      '/api/analytics/sales-trend',
+      { granularity, ...filters },
+      { bypassCache }
+    ),
+  getCategoryPerformance: (filters?: ActiveFilters, bypassCache = false) =>
+    request<CategoryPerformanceItem[]>(
+      '/api/analytics/category-performance',
+      filters as Record<string, string | number | undefined>,
+      { bypassCache }
+    ),
+  getStorePerformance: (filters?: ActiveFilters, bypassCache = false) =>
     request<{
       stores: StorePerformanceItem[];
       cities: CityComparisonItem[];
       store_types: StoreTypeComparisonItem[];
-    }>('/api/analytics/store-performance', filters as Record<string, string | number | undefined>),
-  getRiskAnalysis: () => request<RiskAnalysisResponse>('/api/analytics/risk-analysis'),
-  getPareto: (filters?: ActiveFilters) => request<ParetoResponse>('/api/analytics/pareto', filters),
-  getFilters: () => request<FilterOptions>('/api/explorer/filters'),
+    }>('/api/analytics/store-performance', filters as Record<string, string | number | undefined>, { bypassCache }),
+  getRiskAnalysis: (bypassCache = false) =>
+    request<RiskAnalysisResponse>('/api/analytics/risk-analysis', undefined, { bypassCache }),
+  getPareto: (filters?: ActiveFilters, bypassCache = false) =>
+    request<ParetoResponse>('/api/analytics/pareto', filters, { bypassCache }),
+  getFilters: () => request<FilterOptions>('/api/explorer/filters', undefined, { ttlMs: 30 * 60 * 1000 }),
   getSalesRecords: (
     page = 1,
     pageSize = 50,

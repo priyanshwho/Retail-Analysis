@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.schemas import DashboardOverviewResponse
 from app.services.analytics import AnalyticsService
+from app.cache import cache
 
 router = APIRouter(prefix="/api/dashboard", tags=["Dashboard"])
 
@@ -23,6 +24,11 @@ def get_dashboard_overview(
     db: Session = Depends(get_db),
 ):
     """Retrieve high-level KPIs, monthly trend, channel distribution, top stores, and top categories."""
+    cache_key = f"overview:{start_date}:{end_date}:{city}:{store_type}:{category}:{channel}:{brand}:{store_id}"
+    cached = cache.get(cache_key)
+    if cached is not None:
+        return cached
+
     data = AnalyticsService.get_dashboard_overview(
         db,
         start_date=start_date,
@@ -34,4 +40,5 @@ def get_dashboard_overview(
         brand=brand,
         store_id=store_id,
     )
+    cache.set(cache_key, data, ttl=300)
     return data

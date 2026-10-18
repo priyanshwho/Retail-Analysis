@@ -92,7 +92,7 @@ export const SalesAnalyticsPage: React.FC<SalesAnalyticsPageProps> = ({ filters 
               onClick={() => setGranularity(g)}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize transition-all cursor-pointer ${
                 granularity === g
-                  ? 'bg-indigo-600 text-white shadow-sm'
+                  ? 'bg-blue-600 text-white shadow-sm'
                   : 'text-slate-700 hover:text-slate-950 hover:bg-[#D4E3F0] dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-800/60'
               }`}
             >
@@ -132,7 +132,7 @@ export const SalesAnalyticsPage: React.FC<SalesAnalyticsPageProps> = ({ filters 
                 formatter={(val: unknown, name: unknown) => [Number(val).toLocaleString(), String(name)]}
               />
               <Legend wrapperStyle={{ paddingTop: '10px' }} />
-              <Bar dataKey="revenue" name="Total Revenue" fill="#6366f1" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="revenue" name="Total Revenue" fill="#2563EB" radius={[4, 4, 0, 0]} />
               <Line
                 type="monotone"
                 dataKey="profit"
@@ -176,7 +176,7 @@ export const SalesAnalyticsPage: React.FC<SalesAnalyticsPageProps> = ({ filters 
                 <XAxis dataKey="date" stroke={axisColor} tick={{ fontSize: 10 }} angle={-30} textAnchor="end" />
                 <YAxis stroke={axisColor} tick={{ fontSize: 11 }} />
                 <Tooltip contentStyle={tooltipStyle} />
-                <Bar dataKey="orders" name="Transactions" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="orders" name="Transactions" fill="#0284c7" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>

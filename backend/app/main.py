@@ -51,6 +51,15 @@ app.include_router(analytics.router)
 app.include_router(explorer.router)
 
 
+@app.post("/api/cache/clear", tags=["Cache"])
+def clear_cache():
+    """Clear in-memory analytics TTL cache."""
+    from app.cache import cache
+    cache.clear()
+    return {"status": "ok", "message": "Cache successfully cleared"}
+
+
+
 @app.get("/api/health", response_model=HealthResponse, tags=["Health"])
 def health_check(db: Session = Depends(get_db)):
     """Health check endpoint that verifies database connectivity and table counts."""

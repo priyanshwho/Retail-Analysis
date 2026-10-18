@@ -12,6 +12,7 @@ from app.schemas import (
     ParetoResponse,
 )
 from app.services.analytics import AnalyticsService
+from app.cache import cache
 
 router = APIRouter(prefix="/api/analytics", tags=["Analytics"])
 
@@ -30,6 +31,11 @@ def get_sales_trend(
     db: Session = Depends(get_db),
 ):
     """Retrieve aggregated revenue, profit, units, and order volume by time period."""
+    cache_key = f"trend:{granularity}:{start_date}:{end_date}:{city}:{store_type}:{category}:{channel}:{brand}:{store_id}"
+    cached = cache.get(cache_key)
+    if cached is not None:
+        return cached
+
     data = AnalyticsService.get_sales_trend(
         db,
         granularity=granularity,
@@ -42,7 +48,9 @@ def get_sales_trend(
         brand=brand,
         store_id=store_id,
     )
-    return {"granularity": granularity, "data": data}
+    result = {"granularity": granularity, "data": data}
+    cache.set(cache_key, result, ttl=300)
+    return result
 
 
 @router.get("/category-performance", response_model=list[CategoryPerformanceItem])
@@ -57,7 +65,12 @@ def get_category_performance(
     db: Session = Depends(get_db),
 ):
     """Retrieve category performance metrics including revenue, profit, and margin %."""
-    return AnalyticsService.get_category_performance(
+    cache_key = f"cat_perf:{start_date}:{end_date}:{city}:{store_type}:{channel}:{brand}:{store_id}"
+    cached = cache.get(cache_key)
+    if cached is not None:
+        return cached
+
+    result = AnalyticsService.get_category_performance(
         db,
         start_date=start_date,
         end_date=end_date,
@@ -67,6 +80,8 @@ def get_category_performance(
         brand=brand,
         store_id=store_id,
     )
+    cache.set(cache_key, result, ttl=300)
+    return result
 
 
 @router.get("/store-performance")
@@ -81,7 +96,12 @@ def get_store_performance(
     db: Session = Depends(get_db),
 ):
     """Retrieve store-level rankings, city comparisons, and store format comparisons."""
-    return AnalyticsService.get_store_performance(
+    cache_key = f"store_perf:{start_date}:{end_date}:{city}:{store_type}:{category}:{channel}:{brand}"
+    cached = cache.get(cache_key)
+    if cached is not None:
+        return cached
+
+    result = AnalyticsService.get_store_performance(
         db,
         start_date=start_date,
         end_date=end_date,
@@ -91,17 +111,21 @@ def get_store_performance(
         channel=channel,
         brand=brand,
     )
+    cache.set(cache_key, result, ttl=300)
+    return result
 
 
 @router.get("/risk-analysis", response_model=RiskAnalysisResponse)
 def get_risk_analysis(db: Session = Depends(get_db)):
-    """Retrieve risk quadrants:
+    """Retrieve risk quadrants."""
+    cache_key = "risk_analysis"
+    cached = cache.get(cache_key)
+    if cached is not None:
+        return cached
 
-    1. High sales & low stock (stockout risk)
-    2. Low stock (below reorder point)
-    3. High sales & low profit (margin risk)
-    """
-    return AnalyticsService.get_risk_analysis(db)
+    result = AnalyticsService.get_risk_analysis(db)
+    cache.set(cache_key, result, ttl=300)
+    return result
 
 
 @router.get("/pareto", response_model=ParetoResponse)
@@ -117,7 +141,12 @@ def get_pareto(
     db: Session = Depends(get_db),
 ):
     """Retrieve 80/20 cumulative revenue analysis across catalog SKUs."""
-    return AnalyticsService.get_pareto_analysis(
+    cache_key = f"pareto:{start_date}:{end_date}:{city}:{store_type}:{category}:{channel}:{brand}:{store_id}"
+    cached = cache.get(cache_key)
+    if cached is not None:
+        return cached
+
+    result = AnalyticsService.get_pareto_analysis(
         db,
         start_date=start_date,
         end_date=end_date,
@@ -128,3 +157,5 @@ def get_pareto(
         brand=brand,
         store_id=store_id,
     )
+    cache.set(cache_key, result, ttl=300)
+    return result
