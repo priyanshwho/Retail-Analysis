@@ -62,7 +62,7 @@ export const KPICard: React.FC<KPICardProps> = ({
   return (
     <div className={`group glass-panel rounded-2xl p-5 border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${c.glow}`}>
       <div className="flex items-center justify-between mb-3">
-        <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 tracking-wide uppercase">
+        <span className="text-xs font-semibold text-slate-600 dark:text-slate-400 tracking-wide uppercase">
           {title}
         </span>
         <div className={`w-9 h-9 rounded-xl ${c.bg} border ${c.border} flex items-center justify-center shadow-xs`}>
@@ -75,7 +75,7 @@ export const KPICard: React.FC<KPICardProps> = ({
           {value}
         </span>
         {badge && (
-          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-[#EFEAE0] text-slate-700 border border-[#DDD6C8] dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700">
+          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-[#E2ECF5] text-slate-800 border border-[#CBDCEB] dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700">
             {badge}
           </span>
         )}

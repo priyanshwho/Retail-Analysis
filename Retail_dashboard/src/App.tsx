@@ -104,7 +104,7 @@ export const App: React.FC = () => {
   ).length;
 
   return (
-    <div className="flex min-h-screen bg-[#F8F6F0] text-slate-900 dark:bg-[#0B0F19] dark:text-slate-100 font-sans selection:bg-indigo-500/30 transition-colors duration-300">
+    <div className="flex min-h-screen bg-[#F0F4F8] text-slate-900 dark:bg-[#0B0F19] dark:text-slate-100 font-sans selection:bg-indigo-500/30 transition-colors duration-300">
       {/* Collapsible and Responsive Sidebar with sticky vertical scroll */}
       <Sidebar
         activeTab={activeTab}
@@ -142,7 +142,7 @@ export const App: React.FC = () => {
                 (overviewData ? (
                   <OverviewPage data={overviewData} />
                 ) : error ? (
-                  <div className="flex flex-col items-center justify-center min-h-[420px] text-center p-8 bg-[#F4F1EA] dark:bg-slate-900/60 border border-[#DDD6C8] dark:border-slate-800 rounded-2xl max-w-lg mx-auto mt-12 shadow-xl shadow-black/5 dark:shadow-black/40">
+                  <div className="flex flex-col items-center justify-center min-h-[420px] text-center p-8 bg-[#EAF0F6] dark:bg-slate-900/60 border border-[#CBDCEB] dark:border-slate-800 rounded-2xl max-w-lg mx-auto mt-12 shadow-xl shadow-black/5 dark:shadow-black/40">
                     <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-400 mb-4">
                       <AlertTriangle className="w-6 h-6" />
                     </div>

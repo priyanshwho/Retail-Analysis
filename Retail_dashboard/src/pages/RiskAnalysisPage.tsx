@@ -82,23 +82,23 @@ export const RiskAnalysisPage: React.FC = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`text-left glass-panel rounded-2xl p-5 border transition-all ${
+              className={`text-left glass-panel rounded-2xl p-5 border transition-all cursor-pointer ${
                 isSelected
-                  ? 'border-indigo-500 bg-slate-800/80 shadow-lg shadow-indigo-500/10 -translate-y-1'
-                  : 'border-slate-800/80 hover:border-slate-700'
+                  ? 'border-indigo-500 bg-[#E2ECF5] dark:bg-slate-800/80 shadow-lg shadow-indigo-500/10 -translate-y-1'
+                  : 'border-[#CBDCEB] dark:border-slate-800/80 hover:border-indigo-400'
               }`}
             >
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-semibold text-slate-300 uppercase tracking-wide">
+                <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wide">
                   {tab.label}
                 </span>
                 <div
                   className={`w-8 h-8 rounded-xl flex items-center justify-center ${
                     tab.color === 'rose'
-                      ? 'bg-rose-500/10 text-rose-400'
+                      ? 'bg-rose-500/10 text-rose-600 dark:text-rose-400'
                       : tab.color === 'amber'
-                      ? 'bg-amber-500/10 text-amber-400'
-                      : 'bg-cyan-500/10 text-cyan-400'
+                      ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400'
+                      : 'bg-cyan-500/10 text-cyan-700 dark:text-cyan-400'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -106,11 +106,11 @@ export const RiskAnalysisPage: React.FC = () => {
               </div>
 
               <div className="flex items-baseline gap-2 mb-1">
-                <span className="text-3xl font-extrabold text-white">{tab.count}</span>
-                <span className="text-xs text-slate-400 font-medium">SKUs flagged</span>
+                <span className="text-3xl font-extrabold text-slate-900 dark:text-white">{tab.count}</span>
+                <span className="text-xs text-slate-600 dark:text-slate-400 font-medium">SKUs flagged</span>
               </div>
 
-              <p className="text-xs text-slate-400 line-clamp-2 mt-2 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 mt-2 leading-relaxed">
                 {tab.desc}
               </p>
             </button>
@@ -119,13 +119,13 @@ export const RiskAnalysisPage: React.FC = () => {
       </div>
 
       {/* Explanatory Banner */}
-      <div className="glass-panel p-5 rounded-2xl border border-indigo-500/30 bg-indigo-950/20 flex items-start gap-3.5">
-        <Info className="w-5 h-5 text-indigo-400 shrink-0 mt-0.5" />
-        <div className="text-xs space-y-1 text-slate-300">
-          <div className="font-semibold text-indigo-300 text-sm">
+      <div className="glass-panel p-5 rounded-2xl border border-indigo-200 dark:border-indigo-500/30 bg-indigo-50/70 dark:bg-indigo-950/20 flex items-start gap-3.5">
+        <Info className="w-5 h-5 text-indigo-600 dark:text-indigo-400 shrink-0 mt-0.5" />
+        <div className="text-xs space-y-1 text-slate-700 dark:text-slate-300">
+          <div className="font-bold text-indigo-800 dark:text-indigo-300 text-sm">
             {currentTabInfo.label} Analysis
           </div>
-          <p className="text-slate-400">{currentTabInfo.desc}</p>
+          <p className="text-slate-600 dark:text-slate-400 font-medium">{currentTabInfo.desc}</p>
         </div>
       </div>
 
@@ -137,7 +137,7 @@ export const RiskAnalysisPage: React.FC = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-slate-800 text-slate-400 uppercase tracking-wider font-semibold">
+              <tr className="border-b border-[#D9E3EE] dark:border-slate-800 text-slate-700 dark:text-slate-300 uppercase tracking-wider font-bold">
                 <th className="pb-3 px-2">SKU ID</th>
                 <th className="pb-3">Product Name</th>
                 <th className="pb-3">Category</th>
@@ -154,37 +154,37 @@ export const RiskAnalysisPage: React.FC = () => {
                 <th className="pb-3 px-3">Diagnostic Reason</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60">
+            <tbody className="divide-y divide-[#E2E8F0] dark:divide-slate-800/60">
               {currentItems.map((item, idx) => (
-                <tr key={`${item.sku_id}-${idx}`} className="hover:bg-slate-800/40 transition-colors">
-                  <td className="py-3 px-2 font-mono text-slate-400">#{item.sku_id}</td>
-                  <td className="py-3 font-semibold text-slate-200">{item.sku_name}</td>
+                <tr key={`${item.sku_id}-${idx}`} className="hover:bg-[#EBF2F7] dark:hover:bg-slate-800/40 transition-colors">
+                  <td className="py-3 px-2 font-mono text-slate-600 dark:text-slate-400">#{item.sku_id}</td>
+                  <td className="py-3 font-semibold text-slate-900 dark:text-slate-200">{item.sku_name}</td>
                   <td className="py-3">
-                    <span className="px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700 text-[10px]">
+                    <span className="px-2 py-0.5 rounded-full bg-[#E2ECF5] text-slate-800 border border-[#CBDCEB] dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 text-[10px] font-medium">
                       {item.category}
                     </span>
                   </td>
-                  <td className="py-3 text-slate-400">{item.brand}</td>
+                  <td className="py-3 text-slate-600 dark:text-slate-400 font-medium">{item.brand}</td>
                   {activeTab !== 'low_stock' && (
                     <>
-                      <td className="py-3 px-3 text-right font-mono font-medium text-slate-200">
+                      <td className="py-3 px-3 text-right font-mono font-medium text-slate-900 dark:text-slate-200">
                         {item.total_sales_quantity?.toLocaleString()}
                       </td>
-                      <td className="py-3 px-3 text-right font-mono text-slate-200">
+                      <td className="py-3 px-3 text-right font-mono text-slate-900 dark:text-slate-200 font-bold">
                         {item.total_revenue?.toLocaleString()}
                       </td>
-                      <td className="py-3 px-3 text-right font-mono text-emerald-400 font-medium">
+                      <td className="py-3 px-3 text-right font-mono text-emerald-600 dark:text-emerald-400 font-semibold">
                         {item.total_profit?.toLocaleString()}
                       </td>
                     </>
                   )}
-                  <td className="py-3 px-3 text-right font-mono font-bold text-rose-400">
+                  <td className="py-3 px-3 text-right font-mono font-bold text-rose-600 dark:text-rose-400">
                     {item.stock_on_hand?.toLocaleString()}
                   </td>
-                  <td className="py-3 px-3 text-right font-mono text-slate-400">
+                  <td className="py-3 px-3 text-right font-mono text-slate-600 dark:text-slate-400">
                     {item.reorder_point?.toLocaleString()}
                   </td>
-                  <td className="py-3 px-3 text-slate-300 max-w-xs text-[11px] leading-tight">
+                  <td className="py-3 px-3 text-slate-700 dark:text-slate-300 max-w-xs text-[11px] leading-tight font-medium">
                     {item.reason}
                   </td>
                 </tr>

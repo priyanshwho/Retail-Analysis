@@ -19,10 +19,10 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ className = '', compac
         className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 cursor-pointer ${
           isDark
             ? 'bg-slate-950/80 text-indigo-400 hover:text-indigo-300 border border-slate-800 hover:bg-slate-900 shadow-md'
-            : 'bg-white text-amber-600 hover:text-amber-700 border border-[#DDD6C8] hover:bg-[#FAF8F5] shadow-xs'
+            : 'bg-white text-amber-600 hover:text-amber-700 border border-[#CBDCEB] hover:bg-[#F0F4F8] shadow-xs'
         } ${className}`}
-        title={isDark ? 'Switch to Warm Beige Light Mode' : 'Switch to Executive Dark Mode'}
-        aria-label={isDark ? 'Switch to Warm Beige Light Mode' : 'Switch to Executive Dark Mode'}
+        title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+        aria-label={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
       >
         {isDark ? (
           <Moon className="w-4 h-4 transition-transform duration-300 hover:rotate-12" />
@@ -40,16 +40,16 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ className = '', compac
       className={`relative inline-flex items-center gap-1.5 p-1 rounded-xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 cursor-pointer ${
         isDark
           ? 'bg-slate-800/90 text-slate-300 hover:text-white border border-slate-700/80 shadow-inner'
-          : 'bg-[#EDE8DE] text-slate-700 hover:text-slate-900 border border-[#DBD4C6] shadow-sm'
+          : 'bg-[#DCE7F3] text-slate-700 hover:text-slate-900 border border-[#CBDCEB] shadow-inner'
       } ${className}`}
-      title={isDark ? 'Switch to Warm Beige Light Mode' : 'Switch to Executive Dark Mode'}
-      aria-label={isDark ? 'Switch to Warm Beige Light Mode' : 'Switch to Executive Dark Mode'}
+      title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+      aria-label={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
     >
       {/* Light option indicator */}
       <div
         className={`flex items-center justify-center w-7 h-7 rounded-lg transition-all duration-300 ${
           !isDark
-            ? 'bg-[#FBF9F5] text-amber-600 shadow-sm border border-[#E0D9CB]'
+            ? 'bg-white text-amber-600 shadow-sm border border-[#CBDCEB]'
             : 'text-slate-400 hover:text-slate-200'
         }`}
       >

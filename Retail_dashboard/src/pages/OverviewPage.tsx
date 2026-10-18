@@ -39,15 +39,15 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ data }) => {
 
   const tooltipStyle = {
     backgroundColor: isDark ? '#0f172a' : '#ffffff',
-    borderColor: isDark ? '#334155' : '#e2ddd2',
+    borderColor: isDark ? '#334155' : '#cbdceb',
     borderRadius: '12px',
     fontSize: '12px',
-    color: isDark ? '#f8fafc' : '#111827',
-    boxShadow: isDark ? '0 10px 25px -5px rgba(0,0,0,0.5)' : '0 10px 25px -5px rgba(160,145,125,0.15)',
+    color: isDark ? '#f8fafc' : '#0f172a',
+    boxShadow: isDark ? '0 10px 25px -5px rgba(0,0,0,0.5)' : '0 10px 25px -5px rgba(15,23,42,0.1)',
   };
 
-  const gridColor = isDark ? '#1e293b' : '#e8e3da';
-  const axisColor = isDark ? '#64748b' : '#64748b';
+  const gridColor = isDark ? '#1e293b' : '#e2e8f0';
+  const axisColor = isDark ? '#94a3b8' : '#475569';
 
   const formatNumber = (val: number) => {
     if (val >= 1_000_000) return `${(val / 1_000_000).toFixed(2)}M`;
@@ -206,17 +206,17 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ data }) => {
                 />
               </PieChart>
             </ResponsiveContainer>
-            <div className="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-[#E2DDD2] dark:border-slate-800 text-xs">
+            <div className="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-[#D9E3EE] dark:border-slate-800 text-xs">
               {channels.map((ch, idx) => (
-                <div key={ch.channel} className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-[#EFEAE0] dark:bg-slate-950/40">
+                <div key={ch.channel} className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-[#EAF0F6] dark:bg-slate-950/40">
                   <div className="flex items-center gap-2">
                     <span
                       className="w-2.5 h-2.5 rounded-full"
                       style={{ backgroundColor: CHANNEL_COLORS[idx % CHANNEL_COLORS.length] }}
                     />
-                    <span className="text-slate-800 dark:text-slate-300 font-medium">{ch.channel}</span>
+                    <span className="text-slate-800 dark:text-slate-200 font-medium">{ch.channel}</span>
                   </div>
-                  <span className="text-slate-500 dark:text-slate-400 font-medium">{ch.percentage}%</span>
+                  <span className="text-slate-600 dark:text-slate-400 font-semibold">{ch.percentage}%</span>
                 </div>
               ))}
             </div>
@@ -234,18 +234,18 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ data }) => {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-[#E2DDD2] dark:border-slate-800 text-slate-500 dark:text-slate-400 uppercase tracking-wider font-bold">
+                <tr className="border-b border-[#D9E3EE] dark:border-slate-800 text-slate-600 dark:text-slate-400 uppercase tracking-wider font-bold">
                   <th className="pb-3">Store</th>
                   <th className="pb-3 text-right">Revenue</th>
                   <th className="pb-3 text-right">Profit</th>
                   <th className="pb-3 text-right">Margin</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#EAE5DC] dark:divide-slate-800/60">
+              <tbody className="divide-y divide-[#E2E8F0] dark:divide-slate-800/60">
                 {top_stores.map((store) => (
-                  <tr key={store.id} className="hover:bg-[#EAE5DC]/60 dark:hover:bg-slate-800/40 transition-colors">
+                  <tr key={store.id} className="hover:bg-[#EBF2F7] dark:hover:bg-slate-800/40 transition-colors">
                     <td className="py-3 font-semibold text-slate-800 dark:text-slate-200">{store.name}</td>
-                    <td className="py-3 text-right font-mono text-slate-900 dark:text-slate-200">
+                    <td className="py-3 text-right font-mono text-slate-900 dark:text-slate-100 font-medium">
                       {store.revenue.toLocaleString()}
                     </td>
                     <td className="py-3 text-right font-mono text-emerald-600 dark:text-emerald-400 font-semibold">
@@ -269,18 +269,18 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ data }) => {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-[#E2DDD2] dark:border-slate-800 text-slate-500 dark:text-slate-400 uppercase tracking-wider font-bold">
+                <tr className="border-b border-[#D9E3EE] dark:border-slate-800 text-slate-600 dark:text-slate-400 uppercase tracking-wider font-bold">
                   <th className="pb-3">Category</th>
                   <th className="pb-3 text-right">Revenue</th>
                   <th className="pb-3 text-right">Profit</th>
                   <th className="pb-3 text-right">Margin</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#EAE5DC] dark:divide-slate-800/60">
+              <tbody className="divide-y divide-[#E2E8F0] dark:divide-slate-800/60">
                 {top_categories.map((cat) => (
-                  <tr key={cat.id} className="hover:bg-[#EAE5DC]/60 dark:hover:bg-slate-800/40 transition-colors">
+                  <tr key={cat.id} className="hover:bg-[#EBF2F7] dark:hover:bg-slate-800/40 transition-colors">
                     <td className="py-3 font-semibold text-slate-800 dark:text-slate-200">{cat.name}</td>
-                    <td className="py-3 text-right font-mono text-slate-900 dark:text-slate-200">
+                    <td className="py-3 text-right font-mono text-slate-900 dark:text-slate-100 font-medium">
                       {cat.revenue.toLocaleString()}
                     </td>
                     <td className="py-3 text-right font-mono text-emerald-600 dark:text-emerald-400 font-semibold">

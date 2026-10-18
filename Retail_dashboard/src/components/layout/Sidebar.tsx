@@ -59,7 +59,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Main Sidebar Element */}
       <aside
-        className={`fixed lg:sticky top-0 h-screen max-h-screen bg-[#F4F1EA]/95 dark:bg-slate-900/95 border-r border-[#E2DDD2] dark:border-slate-800 flex flex-col justify-between shrink-0 z-50 transition-all duration-300 ease-in-out overflow-y-auto overflow-x-hidden ${
+        className={`fixed lg:sticky top-0 h-screen max-h-screen bg-[#EAF0F6]/95 dark:bg-slate-900/95 border-r border-[#D9E3EE] dark:border-slate-800 flex flex-col justify-between shrink-0 z-50 transition-all duration-300 ease-in-out overflow-y-auto overflow-x-hidden ${
           /* Mobile positioning */
           isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         } ${
@@ -68,10 +68,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
         }`}
       >
         <div>
-          {/* Brand Header */}
+          {/* Brand Header: Exactly h-20 to align horizontally with Header.tsx */}
           <div
-            className={`border-b border-[#E2DDD2] dark:border-slate-800/80 flex items-center transition-all ${
-              isCollapsed ? 'justify-center p-3.5' : 'justify-between p-4'
+            className={`h-20 shrink-0 border-b border-[#D9E3EE] dark:border-slate-800 flex items-center transition-all ${
+              isCollapsed ? 'justify-center px-3' : 'justify-between px-4'
             }`}
           >
             <button
@@ -104,7 +104,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             {!isCollapsed && (
               <button
                 onClick={() => setIsCollapsed(true)}
-                className="hidden lg:flex p-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-[#EAE5DC] dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 cursor-pointer"
+                className="hidden lg:flex p-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-[#DCE7F3] dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 cursor-pointer"
                 title="Collapse sidebar"
                 aria-label="Collapse sidebar"
               >
@@ -115,7 +115,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             {/* Mobile Close Button */}
             <button
               onClick={() => setIsMobileOpen(false)}
-              className="lg:hidden p-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-[#EAE5DC] dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800 transition-colors"
+              className="lg:hidden p-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-[#DCE7F3] dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800 transition-colors"
               aria-label="Close navigation"
             >
               <X className="w-5 h-5" />
@@ -141,8 +141,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     isCollapsed ? 'justify-center px-2 py-3' : 'justify-between px-3.5 py-2.5'
                   } rounded-xl text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 cursor-pointer ${
                     isActive
-                      ? 'bg-gradient-to-r from-indigo-600 to-indigo-700 text-white shadow-md shadow-indigo-600/25 border border-indigo-500/40 font-semibold'
-                      : 'text-slate-700 hover:text-slate-950 hover:bg-[#EAE5DC] dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800/60'
+                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-indigo-600/25 border border-indigo-500/40 font-semibold'
+                      : 'text-slate-700 hover:text-slate-950 hover:bg-[#DCE7F3] dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800/60'
                   }`}
                 >
                   <div className="flex items-center gap-3 min-w-0">
@@ -166,14 +166,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Theme Appearance Switcher */}
-        <div className="p-3 border-t border-[#E2DDD2] dark:border-slate-800/80 transition-all">
+        <div className="p-3 border-t border-[#D9E3EE] dark:border-slate-800/80 transition-all">
           {isCollapsed ? (
             <div className="flex justify-center">
               <ThemeToggle compact />
             </div>
           ) : (
-            <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-[#EFEAE0] dark:bg-slate-950/70 border border-[#DDD6C8] dark:border-slate-800/80">
-              <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+            <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-[#DEE9F4] dark:bg-slate-950/70 border border-[#CBDCEB] dark:border-slate-800/80">
+              <span className="text-xs font-semibold text-slate-800 dark:text-slate-300">
                 Appearance
               </span>
               <ThemeToggle />

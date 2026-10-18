@@ -14,12 +14,15 @@ import { api } from '../services/api';
 import type { ParetoResponse, ActiveFilters } from '../types';
 import { ChartCard } from '../components/ui/ChartCard';
 import { LoadingState } from '../components/ui/LoadingState';
+import { useTheme } from '../context/useTheme';
 
 interface ParetoPageProps {
   filters: ActiveFilters;
 }
 
 export const ParetoPage: React.FC<ParetoPageProps> = ({ filters }) => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
   const [data, setData] = useState<ParetoResponse | null>(null);
   const [loading, setLoading] = useState(true);
 
