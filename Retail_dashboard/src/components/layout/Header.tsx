@@ -81,7 +81,7 @@ export const Header: React.FC<HeaderProps> = ({
           className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all ${
             showFilters || filterCount > 0
               ? 'bg-[#4F46E5] text-white border border-[#4F46E5] shadow-sm'
-              : 'bg-[#E2ECF5] text-slate-700 hover:text-slate-950 hover:bg-[#D4E3F0] border border-[#CBDCEB] dark:bg-[#14161F] dark:text-[#F1F3F7] dark:hover:bg-[#181B26] dark:border-[#222634]'
+              : 'bg-[#E2ECF5] text-slate-700 hover:text-slate-950 hover:bg-[#D4E3F0] border border-[#CBDCEB] dark:bg-[#14161F] dark:text-[#F1F3F7] dark:hover:text-[#F1F3F7] dark:hover:bg-[#181B26] dark:hover:border-[#4F46E5]/40 dark:border-[#222634]'
           }`}
         >
           <Filter className="w-3.5 h-3.5" />
@@ -97,7 +97,7 @@ export const Header: React.FC<HeaderProps> = ({
         <button
           onClick={onRefresh}
           disabled={isLoading}
-          className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold bg-[#E2ECF5] text-slate-700 hover:text-slate-950 hover:bg-[#D4E3F0] border border-[#CBDCEB] dark:bg-[#14161F] dark:text-[#F1F3F7] dark:hover:bg-[#181B26] dark:border-[#222634] transition-all disabled:opacity-50 cursor-pointer"
+          className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold bg-[#E2ECF5] text-slate-700 hover:text-slate-950 hover:bg-[#D4E3F0] border border-[#CBDCEB] dark:bg-[#14161F] dark:text-[#F1F3F7] dark:hover:text-[#F1F3F7] dark:hover:bg-[#181B26] dark:hover:border-[#4F46E5]/40 dark:border-[#222634] transition-all disabled:opacity-50 cursor-pointer"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-[#4F46E5]' : ''}`} />
           <span className="hidden sm:inline">Sync</span>

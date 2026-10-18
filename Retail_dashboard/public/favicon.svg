@@ -1,44 +1,114 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
   <defs>
-    <linearGradient id="bluemart-bg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#3730A3" />
-      <stop offset="50%" stop-color="#4F46E5" />
+    <!-- Light Mode Theme Gradients -->
+    <linearGradient id="bm-bg-light" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#312E81" />
+      <stop offset="45%" stop-color="#4F46E5" />
       <stop offset="100%" stop-color="#0EA5E9" />
     </linearGradient>
-    <linearGradient id="bluemart-spark" x1="18" y1="32" x2="48" y2="50" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#38BDF8" />
-      <stop offset="100%" stop-color="#34D399" />
+
+    <!-- Dark Mode Theme Gradients -->
+    <linearGradient id="bm-bg-dark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14161F" />
+      <stop offset="50%" stop-color="#1E1B4B" />
+      <stop offset="100%" stop-color="#0C4A6E" />
     </linearGradient>
+
+    <!-- Bottom Growth Wave Gradient -->
+    <linearGradient id="bm-wave" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#0EA5E9" />
+    </linearGradient>
+
+    <linearGradient id="bm-ring" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#818CF8" stop-opacity="0.6" />
+      <stop offset="50%" stop-color="#38BDF8" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#0EA5E9" stop-opacity="0.7" />
+    </linearGradient>
+
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <style>
+      .bm-bg {
+        fill: url(#bm-bg-light);
+      }
+      .bm-border {
+        stroke: rgba(255, 255, 255, 0.35);
+      }
+      .bm-spine {
+        fill: #FFFFFF;
+      }
+      .bm-top-loop {
+        stroke: #FFFFFF;
+      }
+      .bm-bottom-loop {
+        stroke: url(#bm-wave);
+      }
+      .bm-pip {
+        fill: #38BDF8;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .bm-bg {
+          fill: url(#bm-bg-dark);
+        }
+        .bm-border {
+          stroke: url(#bm-ring);
+          stroke-width: 2;
+        }
+        .bm-spine {
+          fill: #F1F3F7;
+        }
+        .bm-top-loop {
+          stroke: #F1F3F7;
+        }
+        .bm-bottom-loop {
+          stroke: #38BDF8;
+          filter: drop-shadow(0 0 3px rgba(56, 189, 248, 0.6));
+        }
+        .bm-pip {
+          fill: #0EA5E9;
+          filter: drop-shadow(0 0 3px rgba(14, 165, 233, 0.8));
+        }
+      }
+    </style>
   </defs>
-  
-  <!-- Outer Rounded Squircle Badge -->
-  <rect width="64" height="64" rx="16" fill="url(#bluemart-bg)" />
-  
-  <!-- Inner Border Highlight -->
-  <rect x="1" y="1" width="62" height="62" rx="15" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" />
 
-  <!-- Monogram B + Retail Analytics Spine & Loops -->
-  <!-- Left Spine -->
-  <rect x="15" y="14" width="6.5" height="36" rx="3.25" fill="#FFFFFF" />
+  <!-- Ambient Outer Glow Rim (Ensures high contrast on both dark & light tab bars) -->
+  <rect x="1" y="1" width="62" height="62" rx="17" class="bm-border" fill="none" stroke-width="1.75" />
 
-  <!-- Top Loop (Retail Cart Handle & Upper Lobe) -->
+  <!-- Main Squircle Body -->
+  <rect x="2" y="2" width="60" height="60" rx="16" class="bm-bg" />
+
+  <!-- Inner Soft Bevel Highlight -->
+  <rect x="3" y="3" width="58" height="58" rx="15" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1" fill="none" />
+
+  <!-- 2D Monogram B with Integrated Retail Analytics Flow -->
+  <!-- Left Vertical Spine -->
+  <rect x="16" y="15" width="6.5" height="34" rx="3.25" class="bm-spine" />
+
+  <!-- Top Retail Cart / Upper Lobe -->
   <path
-    d="M20 17.5 H33 C37.6944 17.5 41.5 21.3056 41.5 26 C41.5 30.6944 37.6944 34.5 33 34.5 H20"
-    stroke="#FFFFFF"
+    d="M21 18.5 H32.5 C37.1944 18.5 41 22.3056 41 27 C41 31.6944 37.1944 35.5 32.5 35.5 H21"
+    class="bm-top-loop"
     stroke-width="6.5"
     stroke-linecap="round"
     stroke-linejoin="round"
   />
 
-  <!-- Bottom Loop (Dynamic Analytics Wave & Growth Lobe) -->
+  <!-- Bottom Analytics Wave / Growth Curve -->
   <path
-    d="M20 34.5 H35.5 C40.7467 34.5 45 38.7533 45 43.5 C45 47.5 41.5 49.5 36 49.5 H20"
-    stroke="url(#bluemart-spark)"
+    d="M21 35.5 H34.5 C39.4706 35.5 43.5 39.5294 43.5 44.5 C43.5 46.8 41.5 48.5 36.5 48.5 H21"
+    class="bm-bottom-loop"
     stroke-width="6.5"
     stroke-linecap="round"
     stroke-linejoin="round"
   />
 
-  <!-- Analytics Data Point Indicator -->
-  <circle cx="33" cy="26" r="3" fill="#38BDF8" />
+  <!-- Center Analytics Focal Data Point -->
+  <circle cx="32.5" cy="27" r="3.25" class="bm-pip" />
+  <circle cx="32.5" cy="27" r="1.25" fill="#FFFFFF" />
 </svg>
