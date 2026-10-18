@@ -1,0 +1,4 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/retail-analysis/.venv/bin/python",
+  "python.terminal.activateEnvironment": true
+}
