@@ -1,7 +1,6 @@
 import React from 'react';
 import { RefreshCw, Filter, ShieldCheck, Menu } from 'lucide-react';
 import type { NavTab } from './Sidebar';
-import { ThemeToggle } from '../ui/ThemeToggle';
 
 interface HeaderProps {
   activeTab: NavTab;
@@ -76,9 +75,6 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       <div className="flex items-center gap-2.5 sm:gap-3">
-        {/* Theme Toggle Button */}
-        <ThemeToggle />
-
         {/* Filter Toggle Button */}
         <button
           onClick={toggleFilterBar}

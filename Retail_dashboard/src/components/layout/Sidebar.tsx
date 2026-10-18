@@ -7,19 +7,17 @@ import {
   PieChart,
   Database,
   ChevronRight,
-  DatabaseZap,
   PanelLeftClose,
   X,
 } from 'lucide-react';
 import { BlueMartLogo } from '../ui/BlueMartLogo';
+import { ThemeToggle } from '../ui/ThemeToggle';
 
 export type NavTab = 'overview' | 'sales' | 'stores' | 'risk' | 'pareto' | 'explorer';
 
 interface SidebarProps {
   activeTab: NavTab;
   setActiveTab: (tab: NavTab) => void;
-  healthConnected: boolean;
-  totalRows?: number;
   isCollapsed: boolean;
   setIsCollapsed: (collapsed: boolean) => void;
   isMobileOpen: boolean;
@@ -38,8 +36,6 @@ const navItems: { id: NavTab; label: string; icon: React.ElementType; badge?: st
 export const Sidebar: React.FC<SidebarProps> = ({
   activeTab,
   setActiveTab,
-  healthConnected,
-  totalRows = 641843,
   isCollapsed,
   setIsCollapsed,
   isMobileOpen,
@@ -169,49 +165,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </nav>
         </div>
 
-        {/* Database Live Status Widget */}
-        <div className={`p-3 m-2 rounded-xl bg-[#EFEAE0] border border-[#DDD6C8] dark:bg-slate-950/70 dark:border-slate-800/80 transition-all ${isCollapsed ? 'text-center' : ''}`}>
+        {/* Theme Appearance Switcher */}
+        <div className="p-3 border-t border-[#E2DDD2] dark:border-slate-800/80 transition-all">
           {isCollapsed ? (
-            <div
-              className="flex flex-col items-center gap-1 py-1"
-              title={`Neon PostgreSQL: ${healthConnected ? 'Live' : 'Offline'} (${totalRows.toLocaleString()} rows)`}
-            >
-              <DatabaseZap className={`w-4 h-4 ${healthConnected ? 'text-cyan-600 dark:text-cyan-400' : 'text-rose-600 dark:text-rose-400'}`} />
-              <span
-                className={`w-2 h-2 rounded-full ${
-                  healthConnected ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'
-                }`}
-              />
+            <div className="flex justify-center">
+              <ThemeToggle compact />
             </div>
           ) : (
-            <>
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2 text-xs font-semibold text-slate-800 dark:text-slate-300">
-                  <DatabaseZap className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400 shrink-0" />
-                  <span className="truncate">Neon PostgreSQL</span>
-                </div>
-                <span className="flex items-center gap-1.5 text-[10px] shrink-0">
-                  <span
-                    className={`w-2 h-2 rounded-full ${
-                      healthConnected ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'
-                    }`}
-                  />
-                  <span className={healthConnected ? 'text-emerald-700 dark:text-emerald-400 font-medium' : 'text-rose-700 dark:text-rose-400 font-medium'}>
-                    {healthConnected ? 'Live' : 'Offline'}
-                  </span>
-                </span>
-              </div>
-              <div className="space-y-1 text-[11px] text-slate-600 dark:text-slate-400">
-                <div className="flex justify-between">
-                  <span>Branch</span>
-                  <span className="font-mono text-slate-800 dark:text-slate-300 font-medium">production</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Sales Ledger</span>
-                  <span className="font-mono text-slate-800 dark:text-slate-300 font-medium">{totalRows.toLocaleString()}</span>
-                </div>
-              </div>
-            </>
+            <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-[#EFEAE0] dark:bg-slate-950/70 border border-[#DDD6C8] dark:border-slate-800/80">
+              <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                Appearance
+              </span>
+              <ThemeToggle />
+            </div>
           )}
         </div>
       </aside>

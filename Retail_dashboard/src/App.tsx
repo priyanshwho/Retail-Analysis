@@ -31,7 +31,6 @@ import type {
   DashboardOverview,
   FilterOptions,
   ActiveFilters,
-  HealthStatus,
 } from './types';
 
 export const App: React.FC = () => {
@@ -39,7 +38,6 @@ export const App: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
   const [isMobileOpen, setIsMobileOpen] = useState<boolean>(false);
 
-  const [health, setHealth] = useState<HealthStatus | null>(null);
   const [overviewData, setOverviewData] = useState<DashboardOverview | null>(null);
   const [filterOptions, setFilterOptions] = useState<FilterOptions | null>(null);
   const [filters, setFilters] = useState<ActiveFilters>({});
@@ -47,14 +45,9 @@ export const App: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // Fetch initial health and filter options
+  // Fetch initial filter options
   useEffect(() => {
     let isMounted = true;
-    api
-      .getHealth()
-      .then((h) => isMounted && setHealth(h))
-      .catch((e) => console.error('Health check failed', e));
-
     api
       .getFilters()
       .then((f) => isMounted && setFilterOptions(f))
@@ -116,8 +109,6 @@ export const App: React.FC = () => {
       <Sidebar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        healthConnected={health?.database === 'connected'}
-        totalRows={health?.counts?.sales || 641843}
         isCollapsed={isCollapsed}
         setIsCollapsed={setIsCollapsed}
         isMobileOpen={isMobileOpen}
