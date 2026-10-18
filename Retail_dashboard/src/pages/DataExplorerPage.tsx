@@ -133,14 +133,14 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
   return (
     <div className="space-y-6 animate-fadeIn">
       {/* View Switcher & Action Bar */}
-      <div className="glass-panel p-4 rounded-2xl border border-[#DCE5EF] dark:border-slate-800 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-2 bg-[#E2ECF5] dark:bg-slate-950 p-1 rounded-xl border border-[#CBDCEB] dark:border-slate-800">
+      <div className="glass-panel p-4 rounded-2xl border border-[#DCE5EF] dark:border-[#222634] flex flex-wrap items-center justify-between gap-4">
+        <div className="flex items-center gap-2 bg-[#E2ECF5] dark:bg-[#090A0F] p-1 rounded-xl border border-[#CBDCEB] dark:border-[#222634]">
           <button
             onClick={() => setView('sales')}
             className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               view === 'sales'
-                ? 'bg-blue-600 text-white shadow-sm'
-                : 'text-slate-700 hover:text-slate-950 dark:text-slate-400 dark:hover:text-slate-200'
+                ? 'bg-blue-600 dark:bg-[#4F46E5] text-white shadow-sm'
+                : 'text-slate-700 hover:text-slate-950 dark:text-[#6C7693] dark:hover:text-[#F1F3F7]'
             }`}
           >
             Sales Transactions (641K)
@@ -149,8 +149,8 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
             onClick={() => setView('inventory')}
             className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               view === 'inventory'
-                ? 'bg-blue-600 text-white shadow-sm'
-                : 'text-slate-700 hover:text-slate-950 dark:text-slate-400 dark:hover:text-slate-200'
+                ? 'bg-blue-600 dark:bg-[#4F46E5] text-white shadow-sm'
+                : 'text-slate-700 hover:text-slate-950 dark:text-[#6C7693] dark:hover:text-[#F1F3F7]'
             }`}
           >
             Inventory Snapshots (8.7K)
@@ -166,7 +166,7 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
                   setInvStatus(e.target.value);
                   setInvPage(1);
                 }}
-                className="appearance-none bg-white dark:bg-slate-950 border border-[#CBDCEB] dark:border-slate-800 rounded-lg pl-3 pr-8 py-1.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 font-medium cursor-pointer"
+                className="appearance-none bg-white dark:bg-[#090A0F] border border-[#CBDCEB] dark:border-[#222634] rounded-lg pl-3 pr-8 py-1.5 text-xs text-slate-800 dark:text-[#F1F3F7] focus:outline-none focus:border-indigo-500 dark:focus:border-[#4F46E5] font-medium cursor-pointer"
               >
                 <option value="">All Health Statuses</option>
                 <option value="Critical">Critical (≤ Safety)</option>
@@ -174,13 +174,13 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
                 <option value="Normal">Normal</option>
                 <option value="Overstocked">Overstocked (&gt; 3x Reorder)</option>
               </select>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-[#6C7693] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
           )}
 
           <button
             onClick={exportCurrentTable}
-            className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-[#E2ECF5] text-slate-700 hover:text-slate-950 hover:bg-[#D4E3F0] transition-colors border border-[#CBDCEB] dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700 dark:border-slate-700 cursor-pointer"
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-[#E2ECF5] text-slate-700 hover:text-slate-950 hover:bg-[#D4E3F0] transition-colors border border-[#CBDCEB] dark:bg-[#14161F] dark:text-[#F1F3F7] dark:hover:bg-[#181B26] dark:border-[#222634] cursor-pointer"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Export CSV</span>
@@ -198,49 +198,49 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
         >
           <div className="overflow-x-auto min-h-[460px]">
             <table className="w-full text-left text-xs">
-              <thead className="bg-[#F0F4F8] dark:bg-slate-900 border-b border-[#D9E3EE] dark:border-slate-800 text-slate-700 dark:text-slate-300 uppercase tracking-wider font-bold">
+              <thead className="bg-[#F0F4F8] dark:bg-[#090A0F] border-b border-[#D9E3EE] dark:border-[#222634] text-slate-700 dark:text-[#6C7693] uppercase tracking-wider font-bold">
                 <tr>
-                  <th className="py-3 px-2 cursor-pointer hover:text-slate-950 dark:hover:text-white" onClick={() => handleSort('id')}>
+                  <th className="py-3 px-2 cursor-pointer hover:text-slate-950 dark:hover:text-[#F1F3F7]" onClick={() => handleSort('id')}>
                     <span className="flex items-center gap-1">ID <ArrowUpDown className="w-3 h-3" /></span>
                   </th>
-                  <th className="py-3 cursor-pointer hover:text-slate-950 dark:hover:text-white" onClick={() => handleSort('date')}>
+                  <th className="py-3 cursor-pointer hover:text-slate-950 dark:hover:text-[#F1F3F7]" onClick={() => handleSort('date')}>
                     <span className="flex items-center gap-1">Date <ArrowUpDown className="w-3 h-3" /></span>
                   </th>
                   <th className="py-3">Store</th>
                   <th className="py-3">Product SKU</th>
                   <th className="py-3">Category</th>
-                  <th className="py-3 text-right cursor-pointer hover:text-slate-950 dark:hover:text-white" onClick={() => handleSort('quantity')}>
+                  <th className="py-3 text-right cursor-pointer hover:text-slate-950 dark:hover:text-[#F1F3F7]" onClick={() => handleSort('quantity')}>
                     <span className="flex items-center justify-end gap-1">Qty <ArrowUpDown className="w-3 h-3" /></span>
                   </th>
                   <th className="py-3 text-right">Unit Price</th>
-                  <th className="py-3 text-right cursor-pointer hover:text-slate-950 dark:hover:text-white" onClick={() => handleSort('total_value')}>
+                  <th className="py-3 text-right cursor-pointer hover:text-slate-950 dark:hover:text-[#F1F3F7]" onClick={() => handleSort('total_value')}>
                     <span className="flex items-center justify-end gap-1">Total Rev <ArrowUpDown className="w-3 h-3" /></span>
                   </th>
-                  <th className="py-3 text-right cursor-pointer hover:text-slate-950 dark:hover:text-white" onClick={() => handleSort('profit')}>
+                  <th className="py-3 text-right cursor-pointer hover:text-slate-950 dark:hover:text-[#F1F3F7]" onClick={() => handleSort('profit')}>
                     <span className="flex items-center justify-end gap-1">Profit <ArrowUpDown className="w-3 h-3" /></span>
                   </th>
                   <th className="py-3">Channel</th>
                   <th className="py-3 text-right px-2">Disc %</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E2E8F0] dark:divide-slate-800/60">
+              <tbody className="divide-y divide-[#E2E8F0] dark:divide-[#222634]">
                 {salesData.items.map((row) => (
-                  <tr key={row.id} className="hover:bg-[#EBF2F7] dark:hover:bg-slate-800/40 transition-colors">
-                    <td className="py-2.5 px-2 font-mono text-slate-600 dark:text-slate-400">#{row.id}</td>
-                    <td className="py-2.5 font-mono text-slate-700 dark:text-slate-300">{row.date}</td>
-                    <td className="py-2.5 font-semibold text-slate-900 dark:text-slate-200">{row.store_name}</td>
-                    <td className="py-2.5 font-semibold text-slate-900 dark:text-slate-200">{row.sku_name}</td>
-                    <td className="py-2.5 text-slate-700 dark:text-slate-300">
-                      <span className="px-2 py-0.5 rounded-full bg-[#E2ECF5] border border-[#CBDCEB] dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 text-[10px] font-medium">
+                  <tr key={row.id} className="hover:bg-[#EBF2F7] dark:hover:bg-[#181B26] transition-colors">
+                    <td className="py-2.5 px-2 font-mono text-slate-600 dark:text-[#6C7693]">#{row.id}</td>
+                    <td className="py-2.5 font-mono text-slate-700 dark:text-[#6C7693]">{row.date}</td>
+                    <td className="py-2.5 font-semibold text-slate-900 dark:text-[#F1F3F7]">{row.store_name}</td>
+                    <td className="py-2.5 font-semibold text-slate-900 dark:text-[#F1F3F7]">{row.sku_name}</td>
+                    <td className="py-2.5 text-slate-700 dark:text-[#6C7693]">
+                      <span className="px-2 py-0.5 rounded-full bg-[#E2ECF5] border border-[#CBDCEB] dark:bg-[#090A0F] dark:border-[#222634] dark:text-[#6C7693] text-[10px] font-medium">
                         {row.category}
                       </span>
                     </td>
-                    <td className="py-2.5 text-right font-mono text-slate-700 dark:text-slate-300">{row.quantity}</td>
-                    <td className="py-2.5 text-right font-mono text-slate-600 dark:text-slate-400">{row.unit_price}</td>
-                    <td className="py-2.5 text-right font-mono font-bold text-slate-900 dark:text-slate-100">{row.total_value}</td>
+                    <td className="py-2.5 text-right font-mono text-slate-700 dark:text-[#F1F3F7]">{row.quantity}</td>
+                    <td className="py-2.5 text-right font-mono text-slate-600 dark:text-[#6C7693]">{row.unit_price}</td>
+                    <td className="py-2.5 text-right font-mono font-bold text-slate-900 dark:text-[#F1F3F7]">{row.total_value}</td>
                     <td className="py-2.5 text-right font-mono text-emerald-600 dark:text-emerald-400 font-bold">{row.profit}</td>
-                    <td className="py-2.5 text-slate-700 dark:text-slate-300">{row.channel}</td>
-                    <td className="py-2.5 text-right px-2 font-mono text-slate-600 dark:text-slate-400">
+                    <td className="py-2.5 text-slate-700 dark:text-[#6C7693]">{row.channel}</td>
+                    <td className="py-2.5 text-right px-2 font-mono text-slate-600 dark:text-[#6C7693]">
                       {row.discount_pct !== null ? `${row.discount_pct}%` : '0%'}
                     </td>
                   </tr>
@@ -250,23 +250,23 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
           </div>
 
           {/* Pagination bar */}
-          <div className="flex items-center justify-between pt-4 mt-4 border-t border-[#D9E3EE] dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 font-medium">
+          <div className="flex items-center justify-between pt-4 mt-4 border-t border-[#D9E3EE] dark:border-[#222634] text-xs text-slate-600 dark:text-[#6C7693] font-medium">
             <div>
-              Page <span className="font-bold text-slate-900 dark:text-slate-200">{salesData.page}</span> of{' '}
-              <span className="font-bold text-slate-900 dark:text-slate-200">{salesData.total_pages}</span>
+              Page <span className="font-bold text-slate-900 dark:text-[#F1F3F7]">{salesData.page}</span> of{' '}
+              <span className="font-bold text-slate-900 dark:text-[#F1F3F7]">{salesData.total_pages}</span>
             </div>
             <div className="flex items-center gap-2">
               <button
                 disabled={salesData.page <= 1}
                 onClick={() => setSalesPage(salesData.page - 1)}
-                className="p-1.5 rounded-lg bg-[#E2ECF5] hover:bg-[#D4E3F0] text-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 disabled:opacity-40 transition-colors cursor-pointer"
+                className="p-1.5 rounded-lg bg-[#E2ECF5] hover:bg-[#D4E3F0] text-slate-700 dark:bg-[#090A0F] dark:hover:bg-[#181B26] dark:border dark:border-[#222634] dark:text-[#F1F3F7] disabled:opacity-40 transition-colors cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 disabled={salesData.page >= salesData.total_pages}
                 onClick={() => setSalesPage(salesData.page + 1)}
-                className="p-1.5 rounded-lg bg-[#E2ECF5] hover:bg-[#D4E3F0] text-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 disabled:opacity-40 transition-colors cursor-pointer"
+                className="p-1.5 rounded-lg bg-[#E2ECF5] hover:bg-[#D4E3F0] text-slate-700 dark:bg-[#090A0F] dark:hover:bg-[#181B26] dark:border dark:border-[#222634] dark:text-[#F1F3F7] disabled:opacity-40 transition-colors cursor-pointer"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -280,7 +280,7 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
         >
           <div className="overflow-x-auto min-h-[460px]">
             <table className="w-full text-left text-xs">
-              <thead className="bg-[#F0F4F8] dark:bg-slate-900 border-b border-[#D9E3EE] dark:border-slate-800 text-slate-700 dark:text-slate-300 uppercase tracking-wider font-bold">
+              <thead className="bg-[#F0F4F8] dark:bg-[#090A0F] border-b border-[#D9E3EE] dark:border-[#222634] text-slate-700 dark:text-[#6C7693] uppercase tracking-wider font-bold">
                 <tr>
                   <th className="py-3 px-2">Store</th>
                   <th className="py-3">City</th>
@@ -292,25 +292,25 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
                   <th className="py-3 text-center px-2">Stock Health</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E2E8F0] dark:divide-slate-800/60">
+              <tbody className="divide-y divide-[#E2E8F0] dark:divide-[#222634]">
                 {invData.items.map((row, idx) => (
-                  <tr key={`${row.store_id}-${row.sku_id}-${idx}`} className="hover:bg-[#EBF2F7] dark:hover:bg-slate-800/40 transition-colors">
-                    <td className="py-2.5 px-2 font-semibold text-slate-900 dark:text-slate-200">{row.store_name}</td>
-                    <td className="py-2.5 text-slate-600 dark:text-slate-400 font-medium">{row.city}</td>
-                    <td className="py-2.5 font-semibold text-slate-900 dark:text-slate-200">{row.sku_name}</td>
-                    <td className="py-2.5 text-slate-700 dark:text-slate-300">
-                      <span className="px-2 py-0.5 rounded-full bg-[#E2ECF5] border border-[#CBDCEB] dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 text-[10px] font-medium">
+                  <tr key={`${row.store_id}-${row.sku_id}-${idx}`} className="hover:bg-[#EBF2F7] dark:hover:bg-[#181B26] transition-colors">
+                    <td className="py-2.5 px-2 font-semibold text-slate-900 dark:text-[#F1F3F7]">{row.store_name}</td>
+                    <td className="py-2.5 text-slate-600 dark:text-[#6C7693] font-medium">{row.city}</td>
+                    <td className="py-2.5 font-semibold text-slate-900 dark:text-[#F1F3F7]">{row.sku_name}</td>
+                    <td className="py-2.5 text-slate-700 dark:text-[#6C7693]">
+                      <span className="px-2 py-0.5 rounded-full bg-[#E2ECF5] border border-[#CBDCEB] dark:bg-[#090A0F] dark:border-[#222634] dark:text-[#6C7693] text-[10px] font-medium">
                         {row.category}
                       </span>
                     </td>
-                    <td className="py-2.5 text-right font-mono font-bold text-slate-900 dark:text-slate-100">{row.stock_on_hand}</td>
-                    <td className="py-2.5 text-right font-mono text-slate-600 dark:text-slate-400">{row.reorder_point}</td>
-                    <td className="py-2.5 text-right font-mono text-slate-600 dark:text-slate-400">{row.safety_stock}</td>
+                    <td className="py-2.5 text-right font-mono font-bold text-slate-900 dark:text-[#F1F3F7]">{row.stock_on_hand}</td>
+                    <td className="py-2.5 text-right font-mono text-slate-600 dark:text-[#6C7693]">{row.reorder_point}</td>
+                    <td className="py-2.5 text-right font-mono text-slate-600 dark:text-[#6C7693]">{row.safety_stock}</td>
                     <td className="py-2.5 text-center px-2">
                       <span
                         className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${
                           row.status === 'Critical'
-                            ? 'bg-rose-500/10 text-rose-700 border-rose-500/20 dark:bg-rose-500/20 dark:text-rose-300 dark:border-rose-500/30'
+                            ? 'bg-rose-500/10 text-rose-700 border-rose-500/20 dark:bg-[#F43F5E]/10 dark:text-[#F43F5E] dark:border-[#F43F5E]/30'
                             : row.status === 'Warning'
                             ? 'bg-amber-500/10 text-amber-700 border-amber-500/20 dark:bg-amber-500/20 dark:text-amber-300 dark:border-amber-500/30'
                             : row.status === 'Overstocked'
@@ -328,23 +328,23 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
           </div>
 
           {/* Pagination bar */}
-          <div className="flex items-center justify-between pt-4 mt-4 border-t border-[#D9E3EE] dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 font-medium">
+          <div className="flex items-center justify-between pt-4 mt-4 border-t border-[#D9E3EE] dark:border-[#222634] text-xs text-slate-600 dark:text-[#6C7693] font-medium">
             <div>
-              Page <span className="font-bold text-slate-900 dark:text-slate-200">{invData.page}</span> of{' '}
-              <span className="font-bold text-slate-900 dark:text-slate-200">{invData.total_pages}</span>
+              Page <span className="font-bold text-slate-900 dark:text-[#F1F3F7]">{invData.page}</span> of{' '}
+              <span className="font-bold text-slate-900 dark:text-[#F1F3F7]">{invData.total_pages}</span>
             </div>
             <div className="flex items-center gap-2">
               <button
                 disabled={invData.page <= 1}
                 onClick={() => setInvPage(invData.page - 1)}
-                className="p-1.5 rounded-lg bg-[#E2ECF5] hover:bg-[#D4E3F0] text-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 disabled:opacity-40 transition-colors cursor-pointer"
+                className="p-1.5 rounded-lg bg-[#E2ECF5] hover:bg-[#D4E3F0] text-slate-700 dark:bg-[#090A0F] dark:hover:bg-[#181B26] dark:border dark:border-[#222634] dark:text-[#F1F3F7] disabled:opacity-40 transition-colors cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 disabled={invData.page >= invData.total_pages}
                 onClick={() => setInvPage(invData.page + 1)}
-                className="p-1.5 rounded-lg bg-[#E2ECF5] hover:bg-[#D4E3F0] text-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 disabled:opacity-40 transition-colors cursor-pointer"
+                className="p-1.5 rounded-lg bg-[#E2ECF5] hover:bg-[#D4E3F0] text-slate-700 dark:bg-[#090A0F] dark:hover:bg-[#181B26] dark:border dark:border-[#222634] dark:text-[#F1F3F7] disabled:opacity-40 transition-colors cursor-pointer"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

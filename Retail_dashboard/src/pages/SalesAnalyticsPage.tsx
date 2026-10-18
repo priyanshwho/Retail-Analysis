@@ -57,43 +57,45 @@ export const SalesAnalyticsPage: React.FC<SalesAnalyticsPageProps> = ({ filters 
   const avgMargin = totalRevenue > 0 ? ((totalProfit / totalRevenue) * 100).toFixed(1) : '0';
 
   const tooltipStyle = {
-    backgroundColor: isDark ? '#0f172a' : '#ffffff',
-    borderColor: isDark ? '#334155' : '#cbdceb',
+    backgroundColor: isDark ? '#14161F' : '#ffffff',
+    borderColor: isDark ? '#222634' : '#cbdceb',
     borderRadius: '12px',
     fontSize: '12px',
-    color: isDark ? '#f8fafc' : '#0f172a',
-    boxShadow: isDark ? '0 10px 25px -5px rgba(0,0,0,0.5)' : '0 10px 25px -5px rgba(15,23,42,0.1)',
+    color: isDark ? '#F1F3F7' : '#0f172a',
+    boxShadow: isDark ? '0 10px 25px -5px rgba(0,0,0,0.7)' : '0 10px 25px -5px rgba(15,23,42,0.1)',
   };
 
-  const gridColor = isDark ? '#1e293b' : '#e2e8f0';
-  const axisColor = isDark ? '#94a3b8' : '#475569';
+  const gridColor = isDark ? '#222634' : '#e2e8f0';
+  const axisColor = isDark ? '#6C7693' : '#475569';
+  const focalAccent = isDark ? '#4F46E5' : '#2563EB';
+  const supportingAccent = isDark ? '#0ea5e9' : '#10b981';
 
   return (
     <div className="space-y-8 animate-fadeIn">
       {/* Top summary banner */}
-      <div className="glass-panel p-6 rounded-2xl border border-[#DCE5EF] dark:border-slate-800 flex flex-wrap items-center justify-between gap-4">
+      <div className="glass-panel p-6 rounded-2xl border border-[#DCE5EF] dark:border-[#222634] flex flex-wrap items-center justify-between gap-4">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-400">
+          <span className="text-xs font-bold uppercase tracking-wider text-blue-700 dark:text-[#4F46E5]">
             Timeline Summary
           </span>
-          <h3 className="text-xl font-extrabold text-slate-900 dark:text-white mt-1">
+          <h3 className="text-xl font-extrabold text-slate-900 dark:text-[#F1F3F7] mt-1">
             {data.length} {granularity.toUpperCase()} Data Points Recorded
           </h3>
-          <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 font-medium">
-            Revenue: <span className="text-slate-900 dark:text-slate-200 font-mono font-bold">{totalRevenue.toLocaleString()}</span> • Gross Profit: <span className="text-emerald-600 dark:text-emerald-400 font-mono font-bold">{totalProfit.toLocaleString()}</span> ({avgMargin}% Margin) • Units: <span className="text-cyan-700 dark:text-cyan-400 font-mono font-bold">{totalUnits.toLocaleString()}</span> • Transactions: <span className="text-purple-700 dark:text-purple-400 font-mono font-bold">{totalOrders.toLocaleString()}</span>
+          <p className="text-xs text-slate-600 dark:text-[#6C7693] mt-1 font-medium">
+            Revenue: <span className="text-slate-900 dark:text-[#F1F3F7] font-mono font-bold">{totalRevenue.toLocaleString()}</span> • Gross Profit: <span className="text-emerald-600 dark:text-[#0ea5e9] font-mono font-bold">{totalProfit.toLocaleString()}</span> ({avgMargin}% Margin) • Units: <span className="text-cyan-700 dark:text-cyan-400 font-mono font-bold">{totalUnits.toLocaleString()}</span> • Transactions: <span className="text-purple-700 dark:text-purple-400 font-mono font-bold">{totalOrders.toLocaleString()}</span>
           </p>
         </div>
 
         {/* Granularity Switcher */}
-        <div className="flex items-center gap-1.5 p-1 bg-[#E2ECF5] dark:bg-slate-950 rounded-xl border border-[#CBDCEB] dark:border-slate-800">
+        <div className="flex items-center gap-1.5 p-1 bg-[#E2ECF5] dark:bg-[#090A0F] rounded-xl border border-[#CBDCEB] dark:border-[#222634]">
           {(['month', 'week', 'day', 'year'] as const).map((g) => (
             <button
               key={g}
               onClick={() => setGranularity(g)}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize transition-all cursor-pointer ${
                 granularity === g
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-700 hover:text-slate-950 hover:bg-[#D4E3F0] dark:text-slate-400 dark:hover:text-slate-200 dark:hover:bg-slate-800/60'
+                  ? (isDark ? 'bg-[#4F46E5] text-white shadow-sm' : 'bg-blue-600 text-white shadow-sm')
+                  : 'text-slate-700 hover:text-slate-950 hover:bg-[#D4E3F0] dark:text-[#6C7693] dark:hover:text-[#F1F3F7] dark:hover:bg-[#14161F]'
               }`}
             >
               {g}
@@ -132,14 +134,14 @@ export const SalesAnalyticsPage: React.FC<SalesAnalyticsPageProps> = ({ filters 
                 formatter={(val: unknown, name: unknown) => [Number(val).toLocaleString(), String(name)]}
               />
               <Legend wrapperStyle={{ paddingTop: '10px' }} />
-              <Bar dataKey="revenue" name="Total Revenue" fill="#2563EB" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="revenue" name="Total Revenue" fill={focalAccent} radius={[4, 4, 0, 0]} />
               <Line
                 type="monotone"
                 dataKey="profit"
                 name="Gross Profit"
-                stroke="#10b981"
+                stroke={supportingAccent}
                 strokeWidth={3}
-                dot={{ r: 3, fill: '#10b981' }}
+                dot={{ r: 3, fill: supportingAccent }}
               />
             </ComposedChart>
           </ResponsiveContainer>
@@ -159,7 +161,7 @@ export const SalesAnalyticsPage: React.FC<SalesAnalyticsPageProps> = ({ filters 
                 <XAxis dataKey="date" stroke={axisColor} tick={{ fontSize: 10 }} angle={-30} textAnchor="end" />
                 <YAxis stroke={axisColor} tick={{ fontSize: 11 }} />
                 <Tooltip contentStyle={tooltipStyle} />
-                <Bar dataKey="units" name="Units Sold" fill="#06b6d4" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="units" name="Units Sold" fill={supportingAccent} radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -176,7 +178,7 @@ export const SalesAnalyticsPage: React.FC<SalesAnalyticsPageProps> = ({ filters 
                 <XAxis dataKey="date" stroke={axisColor} tick={{ fontSize: 10 }} angle={-30} textAnchor="end" />
                 <YAxis stroke={axisColor} tick={{ fontSize: 11 }} />
                 <Tooltip contentStyle={tooltipStyle} />
-                <Bar dataKey="orders" name="Transactions" fill="#0284c7" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="orders" name="Transactions" fill={focalAccent} radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>

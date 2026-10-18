@@ -25,20 +25,20 @@ export const LoadingState: React.FC<{ message?: string }> = ({
       </div>
 
       {/* Primary Message */}
-      <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200 tracking-tight text-center">
+      <h4 className="text-sm font-bold text-slate-800 dark:text-[#F1F3F7] tracking-tight text-center">
         {message}
       </h4>
 
       {/* Live Query Subtitle with Pulsing Indicator */}
-      <div className="flex items-center gap-2 mt-2 px-3 py-1 rounded-full bg-blue-50/80 dark:bg-blue-950/40 border border-blue-200/60 dark:border-blue-800/60 text-xs font-medium text-blue-700 dark:text-blue-300">
+      <div className="flex items-center gap-2 mt-2 px-3 py-1 rounded-full bg-blue-50/80 dark:bg-[#14161F] border border-blue-200/60 dark:border-[#222634] text-xs font-medium text-blue-700 dark:text-[#0ea5e9]">
         <span className="relative flex h-2 w-2">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75" />
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600" />
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600 dark:bg-[#4F46E5]" />
         </span>
         <span>Querying live Neon PostgreSQL</span>
       </div>
 
-      <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-2 font-medium">
+      <p className="text-[11px] text-slate-500 dark:text-[#6C7693] mt-2 font-medium">
         Aggregating granular transaction ledger in real-time
       </p>
     </div>

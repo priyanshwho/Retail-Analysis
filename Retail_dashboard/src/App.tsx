@@ -105,7 +105,7 @@ export const App: React.FC = () => {
   ).length;
 
   return (
-    <div className="flex min-h-screen bg-[#F0F4F8] text-slate-900 dark:bg-[#0B0F19] dark:text-slate-100 font-sans selection:bg-indigo-500/30 transition-colors duration-300">
+    <div className="flex min-h-screen bg-[#F0F4F8] text-slate-900 dark:bg-[#090A0F] dark:text-[#F1F3F7] font-sans selection:bg-[#4F46E5]/30 transition-colors duration-300">
       {/* Collapsible and Responsive Sidebar with sticky vertical scroll */}
       <Sidebar
         activeTab={activeTab}
