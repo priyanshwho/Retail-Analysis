@@ -4,6 +4,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ArrowUpDown,
+  ChevronDown,
 } from 'lucide-react';
 import { api } from '../services/api';
 import type {
@@ -158,20 +159,23 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
 
         <div className="flex items-center gap-3">
           {view === 'inventory' && (
-            <select
-              value={invStatus}
-              onChange={(e) => {
-                setInvStatus(e.target.value);
-                setInvPage(1);
-              }}
-              className="bg-white dark:bg-slate-950 border border-[#CBDCEB] dark:border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 font-medium"
-            >
-              <option value="">All Health Statuses</option>
-              <option value="Critical">Critical (≤ Safety)</option>
-              <option value="Warning">Warning (&lt; Reorder)</option>
-              <option value="Normal">Normal</option>
-              <option value="Overstocked">Overstocked (&gt; 3x Reorder)</option>
-            </select>
+            <div className="relative inline-flex items-center">
+              <select
+                value={invStatus}
+                onChange={(e) => {
+                  setInvStatus(e.target.value);
+                  setInvPage(1);
+                }}
+                className="appearance-none bg-white dark:bg-slate-950 border border-[#CBDCEB] dark:border-slate-800 rounded-lg pl-3 pr-8 py-1.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 font-medium cursor-pointer"
+              >
+                <option value="">All Health Statuses</option>
+                <option value="Critical">Critical (≤ Safety)</option>
+                <option value="Warning">Warning (&lt; Reorder)</option>
+                <option value="Normal">Normal</option>
+                <option value="Overstocked">Overstocked (&gt; 3x Reorder)</option>
+              </select>
+              <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 absolute right-2.5 pointer-events-none" />
+            </div>
           )}
 
           <button

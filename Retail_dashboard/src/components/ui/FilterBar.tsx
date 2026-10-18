@@ -1,5 +1,4 @@
-import React from 'react';
-import { Calendar, MapPin, Tag, ShoppingCart, Store, RotateCcw } from 'lucide-react';
+import { Calendar, MapPin, Tag, ShoppingCart, Store, RotateCcw, ChevronDown } from 'lucide-react';
 import type { FilterOptions, ActiveFilters } from '../../types';
 
 interface FilterBarProps {
@@ -49,19 +48,22 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           <label htmlFor="filter-city" className="block text-[11px] font-semibold text-slate-700 dark:text-slate-400 mb-1 flex items-center gap-1">
             <MapPin className="w-3 h-3 text-slate-500 dark:text-slate-400" /> City
           </label>
-          <select
-            id="filter-city"
-            value={filters.city || ''}
-            onChange={(e) => onFilterChange('city', e.target.value || undefined)}
-            className="w-full bg-white dark:bg-slate-950 border border-[#CBDCEB] dark:border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20"
-          >
-            <option value="">All Cities</option>
-            {options?.cities.map((city) => (
-              <option key={city} value={city}>
-                {city}
-              </option>
-            ))}
-          </select>
+          <div className="relative flex items-center">
+            <select
+              id="filter-city"
+              value={filters.city || ''}
+              onChange={(e) => onFilterChange('city', e.target.value || undefined)}
+              className="w-full appearance-none bg-white dark:bg-slate-950 border border-[#CBDCEB] dark:border-slate-800 rounded-lg pl-2.5 pr-8 py-1.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 cursor-pointer"
+            >
+              <option value="">All Cities</option>
+              {options?.cities.map((city) => (
+                <option key={city} value={city}>
+                  {city}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 absolute right-2.5 pointer-events-none" />
+          </div>
         </div>
 
         {/* Store Type Filter */}
@@ -69,19 +71,22 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           <label htmlFor="filter-store-type" className="block text-[11px] font-semibold text-slate-700 dark:text-slate-400 mb-1 flex items-center gap-1">
             <Store className="w-3 h-3 text-slate-500 dark:text-slate-400" /> Store Type
           </label>
-          <select
-            id="filter-store-type"
-            value={filters.store_type || ''}
-            onChange={(e) => onFilterChange('store_type', e.target.value || undefined)}
-            className="w-full bg-white dark:bg-slate-950 border border-[#CBDCEB] dark:border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20"
-          >
-            <option value="">All Formats</option>
-            {options?.store_types.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
+          <div className="relative flex items-center">
+            <select
+              id="filter-store-type"
+              value={filters.store_type || ''}
+              onChange={(e) => onFilterChange('store_type', e.target.value || undefined)}
+              className="w-full appearance-none bg-white dark:bg-slate-950 border border-[#CBDCEB] dark:border-slate-800 rounded-lg pl-2.5 pr-8 py-1.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 cursor-pointer"
+            >
+              <option value="">All Formats</option>
+              {options?.store_types.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 absolute right-2.5 pointer-events-none" />
+          </div>
         </div>
 
         {/* Category Filter */}
@@ -89,19 +94,22 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           <label htmlFor="filter-category" className="block text-[11px] font-semibold text-slate-700 dark:text-slate-400 mb-1 flex items-center gap-1">
             <Tag className="w-3 h-3 text-slate-500 dark:text-slate-400" /> Category
           </label>
-          <select
-            id="filter-category"
-            value={filters.category || ''}
-            onChange={(e) => onFilterChange('category', e.target.value || undefined)}
-            className="w-full bg-white dark:bg-slate-950 border border-[#CBDCEB] dark:border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20"
-          >
-            <option value="">All Categories</option>
-            {options?.categories.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
+          <div className="relative flex items-center">
+            <select
+              id="filter-category"
+              value={filters.category || ''}
+              onChange={(e) => onFilterChange('category', e.target.value || undefined)}
+              className="w-full appearance-none bg-white dark:bg-slate-950 border border-[#CBDCEB] dark:border-slate-800 rounded-lg pl-2.5 pr-8 py-1.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 cursor-pointer"
+            >
+              <option value="">All Categories</option>
+              {options?.categories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 absolute right-2.5 pointer-events-none" />
+          </div>
         </div>
 
         {/* Channel Filter */}
@@ -109,19 +117,22 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           <label htmlFor="filter-channel" className="block text-[11px] font-semibold text-slate-700 dark:text-slate-400 mb-1 flex items-center gap-1">
             <ShoppingCart className="w-3 h-3 text-slate-500 dark:text-slate-400" /> Channel
           </label>
-          <select
-            id="filter-channel"
-            value={filters.channel || ''}
-            onChange={(e) => onFilterChange('channel', e.target.value || undefined)}
-            className="w-full bg-white dark:bg-slate-950 border border-[#CBDCEB] dark:border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20"
-          >
-            <option value="">All Channels</option>
-            {options?.channels.map((ch) => (
-              <option key={ch} value={ch}>
-                {ch}
-              </option>
-            ))}
-          </select>
+          <div className="relative flex items-center">
+            <select
+              id="filter-channel"
+              value={filters.channel || ''}
+              onChange={(e) => onFilterChange('channel', e.target.value || undefined)}
+              className="w-full appearance-none bg-white dark:bg-slate-950 border border-[#CBDCEB] dark:border-slate-800 rounded-lg pl-2.5 pr-8 py-1.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 cursor-pointer"
+            >
+              <option value="">All Channels</option>
+              {options?.channels.map((ch) => (
+                <option key={ch} value={ch}>
+                  {ch}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 absolute right-2.5 pointer-events-none" />
+          </div>
         </div>
 
         {/* Start Date */}
