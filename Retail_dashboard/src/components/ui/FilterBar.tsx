@@ -5,7 +5,7 @@ import type { FilterOptions, ActiveFilters } from '../../types';
 interface FilterBarProps {
   options: FilterOptions | null;
   filters: ActiveFilters;
-  onFilterChange: (key: keyof ActiveFilters, value: any) => void;
+  onFilterChange: (key: keyof ActiveFilters, value: string | number | undefined) => void;
   onReset: () => void;
   isOpen: boolean;
 }
@@ -46,10 +46,11 @@ export const FilterBar: React.FC<FilterBarProps> = ({
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
         {/* City Filter */}
         <div>
-          <label className="block text-[11px] font-medium text-slate-400 mb-1 flex items-center gap-1">
+          <label htmlFor="filter-city" className="block text-[11px] font-medium text-slate-400 mb-1 flex items-center gap-1">
             <MapPin className="w-3 h-3 text-slate-400" /> City
           </label>
           <select
+            id="filter-city"
             value={filters.city || ''}
             onChange={(e) => onFilterChange('city', e.target.value || undefined)}
             className="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
@@ -65,10 +66,11 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
         {/* Store Type Filter */}
         <div>
-          <label className="block text-[11px] font-medium text-slate-400 mb-1 flex items-center gap-1">
+          <label htmlFor="filter-store-type" className="block text-[11px] font-medium text-slate-400 mb-1 flex items-center gap-1">
             <Store className="w-3 h-3 text-slate-400" /> Store Type
           </label>
           <select
+            id="filter-store-type"
             value={filters.store_type || ''}
             onChange={(e) => onFilterChange('store_type', e.target.value || undefined)}
             className="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
@@ -84,10 +86,11 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
         {/* Category Filter */}
         <div>
-          <label className="block text-[11px] font-medium text-slate-400 mb-1 flex items-center gap-1">
+          <label htmlFor="filter-category" className="block text-[11px] font-medium text-slate-400 mb-1 flex items-center gap-1">
             <Tag className="w-3 h-3 text-slate-400" /> Category
           </label>
           <select
+            id="filter-category"
             value={filters.category || ''}
             onChange={(e) => onFilterChange('category', e.target.value || undefined)}
             className="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
@@ -103,10 +106,11 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
         {/* Channel Filter */}
         <div>
-          <label className="block text-[11px] font-medium text-slate-400 mb-1 flex items-center gap-1">
+          <label htmlFor="filter-channel" className="block text-[11px] font-medium text-slate-400 mb-1 flex items-center gap-1">
             <ShoppingCart className="w-3 h-3 text-slate-400" /> Channel
           </label>
           <select
+            id="filter-channel"
             value={filters.channel || ''}
             onChange={(e) => onFilterChange('channel', e.target.value || undefined)}
             className="w-full bg-slate-950 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
@@ -122,10 +126,11 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
         {/* Start Date */}
         <div>
-          <label className="block text-[11px] font-medium text-slate-400 mb-1 flex items-center gap-1">
+          <label htmlFor="filter-start-date" className="block text-[11px] font-medium text-slate-400 mb-1 flex items-center gap-1">
             <Calendar className="w-3 h-3 text-slate-400" /> From Date
           </label>
           <input
+            id="filter-start-date"
             type="date"
             value={filters.start_date || ''}
             min={options?.date_range.min}
@@ -137,10 +142,11 @@ export const FilterBar: React.FC<FilterBarProps> = ({
 
         {/* End Date */}
         <div>
-          <label className="block text-[11px] font-medium text-slate-400 mb-1 flex items-center gap-1">
+          <label htmlFor="filter-end-date" className="block text-[11px] font-medium text-slate-400 mb-1 flex items-center gap-1">
             <Calendar className="w-3 h-3 text-slate-400" /> To Date
           </label>
           <input
+            id="filter-end-date"
             type="date"
             value={filters.end_date || ''}
             min={options?.date_range.min}

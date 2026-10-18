@@ -27,7 +27,6 @@ export const SalesAnalyticsPage: React.FC<SalesAnalyticsPageProps> = ({ filters 
 
   useEffect(() => {
     let isMounted = true;
-    setLoading(true);
     api
       .getSalesTrend(granularity, filters)
       .then((res) => {
@@ -121,7 +120,7 @@ export const SalesAnalyticsPage: React.FC<SalesAnalyticsPageProps> = ({ filters 
                   fontSize: '12px',
                   color: '#f8fafc',
                 }}
-                formatter={(val: any, name: any) => [Number(val).toLocaleString(), name]}
+                formatter={(val: unknown, name: unknown) => [Number(val).toLocaleString(), String(name)]}
               />
               <Legend wrapperStyle={{ paddingTop: '10px' }} />
               <Bar dataKey="revenue" name="Total Revenue" fill="#6366f1" radius={[4, 4, 0, 0]} />

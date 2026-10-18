@@ -3,6 +3,9 @@ import type {
   DashboardOverview,
   SalesTrendPoint,
   CategoryPerformanceItem,
+  StorePerformanceItem,
+  CityComparisonItem,
+  StoreTypeComparisonItem,
   RiskAnalysisResponse,
   ParetoResponse,
   PaginatedResponse,
@@ -26,8 +29,8 @@ function buildQuery(params?: Record<string, string | number | undefined | null>)
   return queryString ? `?${queryString}` : '';
 }
 
-async function request<T>(endpoint: string, params?: Record<string, any>): Promise<T> {
-  const url = `${BASE_URL}${endpoint}${buildQuery(params)}`;
+async function request<T>(endpoint: string, params?: Record<string, string | number | boolean | undefined | null>): Promise<T> {
+  const url = `${BASE_URL}${endpoint}${buildQuery(params as Record<string, string | number | undefined | null>)}`;
   const res = await fetch(url);
   if (!res.ok) {
     const errorText = await res.text();
@@ -38,20 +41,20 @@ async function request<T>(endpoint: string, params?: Record<string, any>): Promi
 
 export const api = {
   getHealth: () => request<HealthStatus>('/api/health'),
-  getOverview: (filters?: ActiveFilters) => request<DashboardOverview>('/api/dashboard/overview', filters),
+  getOverview: (filters?: ActiveFilters) => request<DashboardOverview>('/api/dashboard/overview', filters as Record<string, string | number | undefined>),
   getSalesTrend: (granularity: 'day' | 'week' | 'month' | 'year' = 'month', filters?: ActiveFilters) =>
     request<{ granularity: string; data: SalesTrendPoint[] }>('/api/analytics/sales-trend', {
       granularity,
       ...filters,
     }),
   getCategoryPerformance: (filters?: ActiveFilters) =>
-    request<CategoryPerformanceItem[]>('/api/analytics/category-performance', filters),
+    request<CategoryPerformanceItem[]>('/api/analytics/category-performance', filters as Record<string, string | number | undefined>),
   getStorePerformance: (filters?: ActiveFilters) =>
     request<{
-      stores: any[];
-      cities: any[];
-      store_types: any[];
-    }>('/api/analytics/store-performance', filters),
+      stores: StorePerformanceItem[];
+      cities: CityComparisonItem[];
+      store_types: StoreTypeComparisonItem[];
+    }>('/api/analytics/store-performance', filters as Record<string, string | number | undefined>),
   getRiskAnalysis: () => request<RiskAnalysisResponse>('/api/analytics/risk-analysis'),
   getPareto: (filters?: ActiveFilters) => request<ParetoResponse>('/api/analytics/pareto', filters),
   getFilters: () => request<FilterOptions>('/api/explorer/filters'),

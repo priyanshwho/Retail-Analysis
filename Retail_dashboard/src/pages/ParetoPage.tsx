@@ -25,7 +25,6 @@ export const ParetoPage: React.FC<ParetoPageProps> = ({ filters }) => {
 
   useEffect(() => {
     let isMounted = true;
-    setLoading(true);
     api
       .getPareto(filters)
       .then((res) => {
@@ -128,9 +127,9 @@ export const ParetoPage: React.FC<ParetoPageProps> = ({ filters }) => {
                   borderRadius: '12px',
                   fontSize: '12px',
                 }}
-                formatter={(val: any, name: any) => [
-                  name === 'Cumulative %' ? `${val}%` : Number(val).toLocaleString(),
-                  name,
+                formatter={(val: unknown, name: unknown) => [
+                  String(name) === 'Cumulative %' ? `${val}%` : Number(val).toLocaleString(),
+                  String(name),
                 ]}
               />
               <ReferenceLine y={80} stroke="#f43f5e" strokeDasharray="4 4" strokeWidth={2} label={{ value: '80% Revenue Threshold', fill: '#f43f5e', fontSize: 11 }} />

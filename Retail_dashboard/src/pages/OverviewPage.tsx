@@ -154,7 +154,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ data }) => {
                     fontSize: '12px',
                     color: '#f8fafc',
                   }}
-                  formatter={(val: any) => [Number(val).toLocaleString(), '']}
+                  formatter={(val: unknown) => [Number(val).toLocaleString(), '']}
                 />
                 <Area
                   type="monotone"
@@ -208,7 +208,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ data }) => {
                     borderRadius: '12px',
                     fontSize: '12px',
                   }}
-                  formatter={(val: any) => [Number(val).toLocaleString(), 'Revenue']}
+                  formatter={(val: unknown) => [Number(val).toLocaleString(), 'Revenue']}
                 />
               </PieChart>
             </ResponsiveContainer>

@@ -10,7 +10,13 @@ import {
   Legend,
 } from 'recharts';
 import { api } from '../services/api';
-import type { CategoryPerformanceItem, ActiveFilters } from '../types';
+import type {
+  CategoryPerformanceItem,
+  StorePerformanceItem,
+  CityComparisonItem,
+  StoreTypeComparisonItem,
+  ActiveFilters,
+} from '../types';
 import { ChartCard } from '../components/ui/ChartCard';
 import { LoadingState } from '../components/ui/LoadingState';
 
@@ -21,15 +27,14 @@ interface StoreCategoryPageProps {
 export const StoreCategoryPage: React.FC<StoreCategoryPageProps> = ({ filters }) => {
   const [categories, setCategories] = useState<CategoryPerformanceItem[]>([]);
   const [storeData, setStoreData] = useState<{
-    stores: any[];
-    cities: any[];
-    store_types: any[];
+    stores: StorePerformanceItem[];
+    cities: CityComparisonItem[];
+    store_types: StoreTypeComparisonItem[];
   } | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
-    setLoading(true);
 
     Promise.all([api.getCategoryPerformance(filters), api.getStorePerformance(filters)])
       .then(([catRes, stRes]) => {
@@ -79,7 +84,7 @@ export const StoreCategoryPage: React.FC<StoreCategoryPageProps> = ({ filters })
                     borderRadius: '12px',
                     fontSize: '12px',
                   }}
-                  formatter={(val: any) => [Number(val).toLocaleString(), '']}
+                  formatter={(val: unknown) => [Number(val).toLocaleString(), '']}
                 />
                 <Legend />
                 <Bar dataKey="revenue" name="Revenue" fill="#6366f1" radius={[4, 4, 0, 0]} />
@@ -120,7 +125,7 @@ export const StoreCategoryPage: React.FC<StoreCategoryPageProps> = ({ filters })
                     borderRadius: '12px',
                     fontSize: '12px',
                   }}
-                  formatter={(val: any) => [Number(val).toLocaleString(), '']}
+                  formatter={(val: unknown) => [Number(val).toLocaleString(), '']}
                 />
                 <Legend />
                 <Bar dataKey="revenue" name="Revenue" fill="#8b5cf6" radius={[4, 4, 0, 0]} />

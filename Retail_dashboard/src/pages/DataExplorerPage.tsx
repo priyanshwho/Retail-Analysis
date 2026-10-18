@@ -41,7 +41,6 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
   useEffect(() => {
     if (view !== 'sales') return;
     let isMounted = true;
-    setLoading(true);
     api
       .getSalesRecords(salesPage, salesPageSize, sortBy, sortOrder, filters)
       .then((res) => {
@@ -64,7 +63,6 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
   useEffect(() => {
     if (view !== 'inventory') return;
     let isMounted = true;
-    setLoading(true);
     api
       .getInventoryRecords(
         invPage,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { RefreshCw, Filter, ShieldCheck } from 'lucide-react';
+import { RefreshCw, Filter, ShieldCheck, Menu } from 'lucide-react';
 import type { NavTab } from './Sidebar';
 
 interface HeaderProps {
@@ -9,6 +9,7 @@ interface HeaderProps {
   filterCount: number;
   toggleFilterBar: () => void;
   showFilters: boolean;
+  onOpenMobileNav: () => void;
 }
 
 const titles: Record<NavTab, { title: string; subtitle: string }> = {
@@ -45,20 +46,32 @@ export const Header: React.FC<HeaderProps> = ({
   filterCount,
   toggleFilterBar,
   showFilters,
+  onOpenMobileNav,
 }) => {
   const current = titles[activeTab] || titles.overview;
 
   return (
-    <header className="h-20 bg-slate-900/60 backdrop-blur-md border-b border-slate-800 px-8 flex items-center justify-between sticky top-0 z-30">
-      <div>
-        <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2.5">
-          {current.title}
-          <span className="flex items-center gap-1 text-[11px] font-normal px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-            <ShieldCheck className="w-3 h-3" />
-            Verified Data
-          </span>
-        </h2>
-        <p className="text-xs text-slate-400 mt-0.5">{current.subtitle}</p>
+    <header className="h-20 bg-slate-900/60 backdrop-blur-md border-b border-slate-800 px-4 sm:px-8 flex items-center justify-between sticky top-0 z-30">
+      <div className="flex items-center gap-3">
+        {/* Mobile Navigation Trigger */}
+        <button
+          onClick={onOpenMobileNav}
+          className="lg:hidden p-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+          aria-label="Open mobile navigation menu"
+        >
+          <Menu className="w-5 h-5" />
+        </button>
+
+        <div>
+          <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight flex items-center gap-2.5">
+            {current.title}
+            <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-normal px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <ShieldCheck className="w-3 h-3" />
+              Verified Data
+            </span>
+          </h2>
+          <p className="text-xs text-slate-400 mt-0.5 hidden sm:block">{current.subtitle}</p>
+        </div>
       </div>
 
       <div className="flex items-center gap-3">

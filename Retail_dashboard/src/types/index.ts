@@ -193,4 +193,5 @@ export interface ActiveFilters {
   channel?: string;
   brand?: string;
   store_id?: number;
+  [key: string]: string | number | undefined;
 }
