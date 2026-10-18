@@ -1,0 +1,9 @@
+services:
+  retail-backend:
+    build: .
+    container_name: retail-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
