@@ -1,0 +1,355 @@
+import React, { useState, useEffect } from 'react';
+import {
+  Download,
+  ChevronLeft,
+  ChevronRight,
+  ArrowUpDown,
+} from 'lucide-react';
+import { api } from '../services/api';
+import type {
+  SalesRecord,
+  InventoryRecord,
+  PaginatedResponse,
+  ActiveFilters,
+} from '../types';
+import { ChartCard } from '../components/ui/ChartCard';
+import { LoadingState } from '../components/ui/LoadingState';
+
+interface DataExplorerPageProps {
+  filters: ActiveFilters;
+}
+
+export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) => {
+  const [view, setView] = useState<'sales' | 'inventory'>('sales');
+
+  // Sales state
+  const [salesData, setSalesData] = useState<PaginatedResponse<SalesRecord> | null>(null);
+  const [salesPage, setSalesPage] = useState(1);
+  const salesPageSize = 50;
+  const [sortBy, setSortBy] = useState('date');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+
+  // Inventory state
+  const [invData, setInvData] = useState<PaginatedResponse<InventoryRecord> | null>(null);
+  const [invPage, setInvPage] = useState(1);
+  const invPageSize = 50;
+  const [invStatus, setInvStatus] = useState<string>('');
+
+  const [loading, setLoading] = useState(true);
+
+  // Fetch sales
+  useEffect(() => {
+    if (view !== 'sales') return;
+    let isMounted = true;
+    setLoading(true);
+    api
+      .getSalesRecords(salesPage, salesPageSize, sortBy, sortOrder, filters)
+      .then((res) => {
+        if (isMounted) {
+          setSalesData(res);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to load sales data', err);
+        if (isMounted) setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [view, salesPage, salesPageSize, sortBy, sortOrder, filters]);
+
+  // Fetch inventory
+  useEffect(() => {
+    if (view !== 'inventory') return;
+    let isMounted = true;
+    setLoading(true);
+    api
+      .getInventoryRecords(
+        invPage,
+        invPageSize,
+        filters.store_id,
+        filters.category,
+        invStatus || undefined
+      )
+      .then((res) => {
+        if (isMounted) {
+          setInvData(res);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to load inventory data', err);
+        if (isMounted) setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [view, invPage, invPageSize, invStatus, filters]);
+
+  const handleSort = (col: string) => {
+    if (sortBy === col) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortBy(col);
+      setSortOrder('desc');
+    }
+    setSalesPage(1);
+  };
+
+  const exportCurrentTable = () => {
+    if (view === 'sales' && salesData) {
+      const headers = ['ID,Date,Store,SKU,Category,Quantity,Unit Price,Total Revenue,Profit,Channel,Discount %'];
+      const rows = salesData.items.map(
+        (s) =>
+          `${s.id},${s.date},"${s.store_name}","${s.sku_name}","${s.category}",${s.quantity},${s.unit_price},${s.total_value},${s.profit},${s.channel},${s.discount_pct ?? ''}`
+      );
+      const csvContent = 'data:text/csv;charset=utf-8,' + [headers, ...rows].join('\n');
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', `bluemart_sales_page_${salesPage}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else if (view === 'inventory' && invData) {
+      const headers = ['Store,City,SKU,Category,Stock On Hand,Reorder Point,Safety Stock,Status'];
+      const rows = invData.items.map(
+        (i) =>
+          `"${i.store_name}","${i.city}","${i.sku_name}","${i.category}",${i.stock_on_hand},${i.reorder_point},${i.safety_stock},${i.status}`
+      );
+      const csvContent = 'data:text/csv;charset=utf-8,' + [headers, ...rows].join('\n');
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', `bluemart_inventory_page_${invPage}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
+
+  return (
+    <div className="space-y-6 animate-fadeIn">
+      {/* View Switcher & Action Bar */}
+      <div className="glass-panel p-4 rounded-2xl border border-slate-800 flex flex-wrap items-center justify-between gap-4">
+        <div className="flex items-center gap-2 bg-slate-950 p-1 rounded-xl border border-slate-800">
+          <button
+            onClick={() => setView('sales')}
+            className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+              view === 'sales'
+                ? 'bg-indigo-600 text-white shadow-sm'
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            Sales Transactions (641K)
+          </button>
+          <button
+            onClick={() => setView('inventory')}
+            className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+              view === 'inventory'
+                ? 'bg-indigo-600 text-white shadow-sm'
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            Inventory Snapshots (8.7K)
+          </button>
+        </div>
+
+        <div className="flex items-center gap-3">
+          {view === 'inventory' && (
+            <select
+              value={invStatus}
+              onChange={(e) => {
+                setInvStatus(e.target.value);
+                setInvPage(1);
+              }}
+              className="bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
+            >
+              <option value="">All Health Statuses</option>
+              <option value="Critical">Critical (≤ Safety)</option>
+              <option value="Warning">Warning (&lt; Reorder)</option>
+              <option value="Normal">Normal</option>
+              <option value="Overstocked">Overstocked (&gt; 3x Reorder)</option>
+            </select>
+          )}
+
+          <button
+            onClick={exportCurrentTable}
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-200 hover:bg-slate-700 transition-colors border border-slate-700"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>Export CSV</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Main Table Content */}
+      {loading ? (
+        <LoadingState message={`Fetching ${view} records from Neon database...`} />
+      ) : view === 'sales' && salesData ? (
+        <ChartCard
+          title={`Sales Transaction Ledger (${salesData.total.toLocaleString()} total entries)`}
+          subtitle={`Showing page ${salesData.page} of ${salesData.total_pages}`}
+        >
+          <div className="overflow-x-auto min-h-[460px]">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-slate-900 border-b border-slate-800 text-slate-400 uppercase tracking-wider font-semibold">
+                <tr>
+                  <th className="py-3 px-2 cursor-pointer hover:text-slate-200" onClick={() => handleSort('id')}>
+                    <span className="flex items-center gap-1">ID <ArrowUpDown className="w-3 h-3" /></span>
+                  </th>
+                  <th className="py-3 cursor-pointer hover:text-slate-200" onClick={() => handleSort('date')}>
+                    <span className="flex items-center gap-1">Date <ArrowUpDown className="w-3 h-3" /></span>
+                  </th>
+                  <th className="py-3">Store</th>
+                  <th className="py-3">Product SKU</th>
+                  <th className="py-3">Category</th>
+                  <th className="py-3 text-right cursor-pointer hover:text-slate-200" onClick={() => handleSort('quantity')}>
+                    <span className="flex items-center justify-end gap-1">Qty <ArrowUpDown className="w-3 h-3" /></span>
+                  </th>
+                  <th className="py-3 text-right">Unit Price</th>
+                  <th className="py-3 text-right cursor-pointer hover:text-slate-200" onClick={() => handleSort('total_value')}>
+                    <span className="flex items-center justify-end gap-1">Total Rev <ArrowUpDown className="w-3 h-3" /></span>
+                  </th>
+                  <th className="py-3 text-right cursor-pointer hover:text-slate-200" onClick={() => handleSort('profit')}>
+                    <span className="flex items-center justify-end gap-1">Profit <ArrowUpDown className="w-3 h-3" /></span>
+                  </th>
+                  <th className="py-3">Channel</th>
+                  <th className="py-3 text-right px-2">Disc %</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-800/60">
+                {salesData.items.map((row) => (
+                  <tr key={row.id} className="hover:bg-slate-800/40 transition-colors">
+                    <td className="py-2.5 px-2 font-mono text-slate-400">#{row.id}</td>
+                    <td className="py-2.5 font-mono text-slate-300">{row.date}</td>
+                    <td className="py-2.5 font-medium text-slate-200">{row.store_name}</td>
+                    <td className="py-2.5 font-medium text-slate-200">{row.sku_name}</td>
+                    <td className="py-2.5 text-slate-400">
+                      <span className="px-2 py-0.5 rounded-full bg-slate-800 border border-slate-700 text-[10px]">
+                        {row.category}
+                      </span>
+                    </td>
+                    <td className="py-2.5 text-right font-mono text-slate-300">{row.quantity}</td>
+                    <td className="py-2.5 text-right font-mono text-slate-400">{row.unit_price}</td>
+                    <td className="py-2.5 text-right font-mono font-medium text-slate-100">{row.total_value}</td>
+                    <td className="py-2.5 text-right font-mono text-emerald-400 font-semibold">{row.profit}</td>
+                    <td className="py-2.5 text-slate-300">{row.channel}</td>
+                    <td className="py-2.5 text-right px-2 font-mono text-slate-400">
+                      {row.discount_pct !== null ? `${row.discount_pct}%` : '0%'}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Pagination bar */}
+          <div className="flex items-center justify-between pt-4 mt-4 border-t border-slate-800 text-xs text-slate-400">
+            <div>
+              Page <span className="font-semibold text-slate-200">{salesData.page}</span> of{' '}
+              <span className="font-semibold text-slate-200">{salesData.total_pages}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                disabled={salesData.page <= 1}
+                onClick={() => setSalesPage(salesData.page - 1)}
+                className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 transition-colors"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                disabled={salesData.page >= salesData.total_pages}
+                onClick={() => setSalesPage(salesData.page + 1)}
+                className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 transition-colors"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </ChartCard>
+      ) : invData ? (
+        <ChartCard
+          title={`Store Inventory Snapshots (${invData.total.toLocaleString()} records)`}
+          subtitle={`Showing page ${invData.page} of ${invData.total_pages}`}
+        >
+          <div className="overflow-x-auto min-h-[460px]">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-slate-900 border-b border-slate-800 text-slate-400 uppercase tracking-wider font-semibold">
+                <tr>
+                  <th className="py-3 px-2">Store</th>
+                  <th className="py-3">City</th>
+                  <th className="py-3">SKU</th>
+                  <th className="py-3">Category</th>
+                  <th className="py-3 text-right">Stock On Hand</th>
+                  <th className="py-3 text-right">Reorder Point</th>
+                  <th className="py-3 text-right">Safety Stock</th>
+                  <th className="py-3 text-center px-2">Stock Health</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-800/60">
+                {invData.items.map((row, idx) => (
+                  <tr key={`${row.store_id}-${row.sku_id}-${idx}`} className="hover:bg-slate-800/40 transition-colors">
+                    <td className="py-2.5 px-2 font-medium text-slate-200">{row.store_name}</td>
+                    <td className="py-2.5 text-slate-400">{row.city}</td>
+                    <td className="py-2.5 font-semibold text-slate-200">{row.sku_name}</td>
+                    <td className="py-2.5 text-slate-400">
+                      <span className="px-2 py-0.5 rounded-full bg-slate-800 border border-slate-700 text-[10px]">
+                        {row.category}
+                      </span>
+                    </td>
+                    <td className="py-2.5 text-right font-mono font-bold text-slate-100">{row.stock_on_hand}</td>
+                    <td className="py-2.5 text-right font-mono text-slate-400">{row.reorder_point}</td>
+                    <td className="py-2.5 text-right font-mono text-slate-400">{row.safety_stock}</td>
+                    <td className="py-2.5 text-center px-2">
+                      <span
+                        className={`px-2 py-0.5 rounded-full text-[10px] font-semibold border ${
+                          row.status === 'Critical'
+                            ? 'bg-rose-500/20 text-rose-300 border-rose-500/30'
+                            : row.status === 'Warning'
+                            ? 'bg-amber-500/20 text-amber-300 border-amber-500/30'
+                            : row.status === 'Overstocked'
+                            ? 'bg-purple-500/20 text-purple-300 border-purple-500/30'
+                            : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+                        }`}
+                      >
+                        {row.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Pagination bar */}
+          <div className="flex items-center justify-between pt-4 mt-4 border-t border-slate-800 text-xs text-slate-400">
+            <div>
+              Page <span className="font-semibold text-slate-200">{invData.page}</span> of{' '}
+              <span className="font-semibold text-slate-200">{invData.total_pages}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                disabled={invData.page <= 1}
+                onClick={() => setInvPage(invData.page - 1)}
+                className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 transition-colors"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                disabled={invData.page >= invData.total_pages}
+                onClick={() => setInvPage(invData.page + 1)}
+                className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 transition-colors"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </ChartCard>
+      ) : null}
+    </div>
+  );
+};
