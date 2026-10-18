@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="bluemart-bg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3730A3" />
+      <stop offset="50%" stop-color="#4F46E5" />
+      <stop offset="100%" stop-color="#0EA5E9" />
+    </linearGradient>
+    <linearGradient id="bluemart-spark" x1="18" y1="32" x2="48" y2="50" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#34D399" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Outer Rounded Squircle Badge -->
+  <rect width="64" height="64" rx="16" fill="url(#bluemart-bg)" />
+  
+  <!-- Inner Border Highlight -->
+  <rect x="1" y="1" width="62" height="62" rx="15" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" />
+
+  <!-- Monogram B + Retail Analytics Spine & Loops -->
+  <!-- Left Spine -->
+  <rect x="15" y="14" width="6.5" height="36" rx="3.25" fill="#FFFFFF" />
+
+  <!-- Top Loop (Retail Cart Handle & Upper Lobe) -->
+  <path
+    d="M20 17.5 H33 C37.6944 17.5 41.5 21.3056 41.5 26 C41.5 30.6944 37.6944 34.5 33 34.5 H20"
+    stroke="#FFFFFF"
+    stroke-width="6.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Bottom Loop (Dynamic Analytics Wave & Growth Lobe) -->
+  <path
+    d="M20 34.5 H35.5 C40.7467 34.5 45 38.7533 45 43.5 C45 47.5 41.5 49.5 36 49.5 H20"
+    stroke="url(#bluemart-spark)"
+    stroke-width="6.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Analytics Data Point Indicator -->
+  <circle cx="33" cy="26" r="3" fill="#38BDF8" />
+</svg>

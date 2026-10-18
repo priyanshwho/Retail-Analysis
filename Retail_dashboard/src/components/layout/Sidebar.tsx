@@ -6,13 +6,13 @@ import {
   AlertTriangle,
   PieChart,
   Database,
-  Layers,
   ChevronRight,
   DatabaseZap,
   PanelLeftClose,
   PanelLeftOpen,
   X,
 } from 'lucide-react';
+import { BlueMartLogo } from '../ui/BlueMartLogo';
 
 export type NavTab = 'overview' | 'sales' | 'stores' | 'risk' | 'pareto' | 'explorer';
 
@@ -77,12 +77,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <div className="p-4 border-b border-[#E2DDD2] dark:border-slate-800/80 flex items-center justify-between">
             <button
               onClick={() => handleNavClick('overview')}
-              className="flex items-center gap-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-xl cursor-pointer"
+              className="group flex items-center gap-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-xl cursor-pointer"
               title="BlueMart Retail Intelligence"
             >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/25 shrink-0">
-                <Layers className="w-5 h-5 text-white" />
-              </div>
+              <BlueMartLogo size={38} className="w-9.5 h-9.5" />
               {!isCollapsed && (
                 <div className="overflow-hidden">
                   <h1 className="text-base font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
