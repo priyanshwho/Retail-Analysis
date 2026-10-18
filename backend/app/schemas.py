@@ -14,6 +14,7 @@ class HealthResponse(BaseModel):
     database: str
     timestamp: datetime
     counts: dict[str, int]
+    error: str | None = None
 
 
 # --- Overview & KPIs ---
