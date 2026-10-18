@@ -37,11 +37,11 @@ export class ErrorBoundary extends Component<Props, State> {
           <div className="w-14 h-14 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center mb-4 text-rose-400">
             <AlertOctagon className="w-7 h-7" />
           </div>
-          <h3 className="text-xl font-bold text-white mb-2">Something went wrong</h3>
-          <p className="text-xs text-slate-400 max-w-md mb-6 leading-relaxed">
+          <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Something went wrong</h3>
+          <p className="text-xs text-slate-600 dark:text-slate-400 max-w-md mb-6 leading-relaxed">
             An unexpected error occurred while rendering this analytics component.
             {this.state.error && (
-              <span className="block mt-2 font-mono text-[11px] text-rose-300/80 bg-rose-950/40 p-2 rounded border border-rose-900/40">
+              <span className="block mt-2 font-mono text-[11px] text-rose-700 dark:text-rose-300/80 bg-rose-50 dark:bg-rose-950/40 p-2 rounded border border-rose-200 dark:border-rose-900/40">
                 {this.state.error.message}
               </span>
             )}

@@ -24,6 +24,7 @@ import {
 import type { DashboardOverview } from '../types';
 import { KPICard } from '../components/ui/KPICard';
 import { ChartCard } from '../components/ui/ChartCard';
+import { useTheme } from '../context/useTheme';
 
 interface OverviewPageProps {
   data: DashboardOverview;
@@ -32,7 +33,21 @@ interface OverviewPageProps {
 const CHANNEL_COLORS = ['#6366f1', '#10b981', '#06b6d4', '#f59e0b', '#ec4899'];
 
 export const OverviewPage: React.FC<OverviewPageProps> = ({ data }) => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
   const { kpis, sales_trend, channels, top_stores, top_categories } = data;
+
+  const tooltipStyle = {
+    backgroundColor: isDark ? '#0f172a' : '#ffffff',
+    borderColor: isDark ? '#334155' : '#e2ddd2',
+    borderRadius: '12px',
+    fontSize: '12px',
+    color: isDark ? '#f8fafc' : '#111827',
+    boxShadow: isDark ? '0 10px 25px -5px rgba(0,0,0,0.5)' : '0 10px 25px -5px rgba(160,145,125,0.15)',
+  };
+
+  const gridColor = isDark ? '#1e293b' : '#e8e3da';
+  const axisColor = isDark ? '#64748b' : '#64748b';
 
   const formatNumber = (val: number) => {
     if (val >= 1_000_000) return `${(val / 1_000_000).toFixed(2)}M`;
@@ -69,61 +84,51 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ data }) => {
         <KPICard
           title="Total Transactions"
           value={kpis.total_orders.toLocaleString()}
-          subtitle="Processed sale ledger transactions"
+          subtitle="Total unique retail transactions recorded"
           icon={ShoppingBag}
           color="purple"
         />
       </div>
 
       {/* Secondary Operational KPIs */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="glass-panel p-4 rounded-xl border border-slate-800 flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400">
-            <Package className="w-4 h-4" />
-          </div>
-          <div>
-            <div className="text-xs text-slate-400 font-medium">Units Sold</div>
-            <div className="text-lg font-bold text-white">{formatNumber(kpis.total_units_sold)}</div>
-          </div>
-        </div>
-
-        <div className="glass-panel p-4 rounded-xl border border-slate-800 flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
-            <Store className="w-4 h-4" />
-          </div>
-          <div>
-            <div className="text-xs text-slate-400 font-medium">Active Stores</div>
-            <div className="text-lg font-bold text-white">{kpis.active_stores} Stores</div>
-          </div>
-        </div>
-
-        <div className="glass-panel p-4 rounded-xl border border-slate-800 flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-400">
-            <Layers className="w-4 h-4" />
-          </div>
-          <div>
-            <div className="text-xs text-slate-400 font-medium">Catalog SKUs</div>
-            <div className="text-lg font-bold text-white">{kpis.total_skus} Products</div>
-          </div>
-        </div>
-
-        <div className="glass-panel p-4 rounded-xl border border-slate-800 flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-rose-500/10 flex items-center justify-center text-rose-400">
-            <AlertCircle className="w-4 h-4" />
-          </div>
-          <div>
-            <div className="text-xs text-slate-400 font-medium">Stock Alerts</div>
-            <div className="text-lg font-bold text-white">{kpis.low_stock_alerts} Critical</div>
-          </div>
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <KPICard
+          title="Units Sold"
+          value={formatNumber(kpis.total_units_sold)}
+          subtitle="Aggregate item volume moved"
+          icon={Package}
+          color="indigo"
+        />
+        <KPICard
+          title="Active Stores"
+          value={kpis.active_stores}
+          subtitle="Operational retail outlets in network"
+          icon={Store}
+          color="emerald"
+        />
+        <KPICard
+          title="Catalog SKUs"
+          value={kpis.total_skus}
+          subtitle="Active stock keeping units tracked"
+          icon={Layers}
+          color="cyan"
+        />
+        <KPICard
+          title="Low Stock Alerts"
+          value={kpis.low_stock_alerts}
+          subtitle="Inventory instances below reorder mark"
+          icon={AlertCircle}
+          color="rose"
+          badge="Action Req."
+        />
       </div>
 
-      {/* Main Charts Row */}
+      {/* Main Charts Row: Sales Trend + Channel Breakdown */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Revenue & Profit Timeline */}
+        {/* Revenue & Profit Area Chart */}
         <ChartCard
           title="Revenue & Profit Trajectory"
-          subtitle="Monthly historical performance across all channels"
+          subtitle="Historical monthly trend aggregated across stores"
           className="lg:col-span-2"
         >
           <div className="h-80 w-full">
@@ -139,21 +144,15 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ data }) => {
                     <stop offset="95%" stopColor="#10b981" stopOpacity={0.0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="date" stroke="#64748b" tick={{ fontSize: 11 }} />
+                <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+                <XAxis dataKey="date" stroke={axisColor} tick={{ fontSize: 11 }} />
                 <YAxis
-                  stroke="#64748b"
+                  stroke={axisColor}
                   tick={{ fontSize: 11 }}
                   tickFormatter={(val) => `${(val / 1_000_000).toFixed(1)}M`}
                 />
                 <Tooltip
-                  contentStyle={{
-                    backgroundColor: '#0f172a',
-                    borderColor: '#334155',
-                    borderRadius: '12px',
-                    fontSize: '12px',
-                    color: '#f8fafc',
-                  }}
+                  contentStyle={tooltipStyle}
                   formatter={(val: unknown) => [Number(val).toLocaleString(), '']}
                 />
                 <Area
@@ -202,27 +201,22 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ data }) => {
                   ))}
                 </Pie>
                 <Tooltip
-                  contentStyle={{
-                    backgroundColor: '#0f172a',
-                    borderColor: '#334155',
-                    borderRadius: '12px',
-                    fontSize: '12px',
-                  }}
+                  contentStyle={tooltipStyle}
                   formatter={(val: unknown) => [Number(val).toLocaleString(), 'Revenue']}
                 />
               </PieChart>
             </ResponsiveContainer>
-            <div className="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-slate-800 text-xs">
+            <div className="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-[#E2DDD2] dark:border-slate-800 text-xs">
               {channels.map((ch, idx) => (
-                <div key={ch.channel} className="flex items-center justify-between px-2 py-1 rounded bg-slate-950/40">
+                <div key={ch.channel} className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-[#EFEAE0] dark:bg-slate-950/40">
                   <div className="flex items-center gap-2">
                     <span
                       className="w-2.5 h-2.5 rounded-full"
                       style={{ backgroundColor: CHANNEL_COLORS[idx % CHANNEL_COLORS.length] }}
                     />
-                    <span className="text-slate-300 font-medium">{ch.channel}</span>
+                    <span className="text-slate-800 dark:text-slate-300 font-medium">{ch.channel}</span>
                   </div>
-                  <span className="text-slate-400">{ch.percentage}%</span>
+                  <span className="text-slate-500 dark:text-slate-400 font-medium">{ch.percentage}%</span>
                 </div>
               ))}
             </div>
@@ -240,24 +234,24 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ data }) => {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-slate-800 text-slate-400 uppercase tracking-wider font-semibold">
+                <tr className="border-b border-[#E2DDD2] dark:border-slate-800 text-slate-500 dark:text-slate-400 uppercase tracking-wider font-bold">
                   <th className="pb-3">Store</th>
                   <th className="pb-3 text-right">Revenue</th>
                   <th className="pb-3 text-right">Profit</th>
                   <th className="pb-3 text-right">Margin</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60">
+              <tbody className="divide-y divide-[#EAE5DC] dark:divide-slate-800/60">
                 {top_stores.map((store) => (
-                  <tr key={store.id} className="hover:bg-slate-800/40 transition-colors">
-                    <td className="py-3 font-medium text-slate-200">{store.name}</td>
-                    <td className="py-3 text-right font-mono text-slate-200">
+                  <tr key={store.id} className="hover:bg-[#EAE5DC]/60 dark:hover:bg-slate-800/40 transition-colors">
+                    <td className="py-3 font-semibold text-slate-800 dark:text-slate-200">{store.name}</td>
+                    <td className="py-3 text-right font-mono text-slate-900 dark:text-slate-200">
                       {store.revenue.toLocaleString()}
                     </td>
-                    <td className="py-3 text-right font-mono text-emerald-400">
+                    <td className="py-3 text-right font-mono text-emerald-600 dark:text-emerald-400 font-semibold">
                       {store.profit.toLocaleString()}
                     </td>
-                    <td className="py-3 text-right font-mono text-indigo-400 font-semibold">
+                    <td className="py-3 text-right font-mono text-indigo-600 dark:text-indigo-400 font-semibold">
                       {store.margin_pct}%
                     </td>
                   </tr>
@@ -275,24 +269,24 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ data }) => {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-slate-800 text-slate-400 uppercase tracking-wider font-semibold">
+                <tr className="border-b border-[#E2DDD2] dark:border-slate-800 text-slate-500 dark:text-slate-400 uppercase tracking-wider font-bold">
                   <th className="pb-3">Category</th>
                   <th className="pb-3 text-right">Revenue</th>
                   <th className="pb-3 text-right">Profit</th>
                   <th className="pb-3 text-right">Margin</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60">
+              <tbody className="divide-y divide-[#EAE5DC] dark:divide-slate-800/60">
                 {top_categories.map((cat) => (
-                  <tr key={cat.id} className="hover:bg-slate-800/40 transition-colors">
-                    <td className="py-3 font-medium text-slate-200">{cat.name}</td>
-                    <td className="py-3 text-right font-mono text-slate-200">
+                  <tr key={cat.id} className="hover:bg-[#EAE5DC]/60 dark:hover:bg-slate-800/40 transition-colors">
+                    <td className="py-3 font-semibold text-slate-800 dark:text-slate-200">{cat.name}</td>
+                    <td className="py-3 text-right font-mono text-slate-900 dark:text-slate-200">
                       {cat.revenue.toLocaleString()}
                     </td>
-                    <td className="py-3 text-right font-mono text-emerald-400">
+                    <td className="py-3 text-right font-mono text-emerald-600 dark:text-emerald-400 font-semibold">
                       {cat.profit.toLocaleString()}
                     </td>
-                    <td className="py-3 text-right font-mono text-cyan-400 font-semibold">
+                    <td className="py-3 text-right font-mono text-cyan-700 dark:text-cyan-400 font-semibold">
                       {cat.margin_pct}%
                     </td>
                   </tr>
