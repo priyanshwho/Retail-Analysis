@@ -230,8 +230,8 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
                     <td className="py-2.5 font-mono text-slate-700 dark:text-[#6C7693]">{row.date}</td>
                     <td className="py-2.5 font-semibold text-slate-900 dark:text-[#F1F3F7]">{row.store_name}</td>
                     <td className="py-2.5 font-semibold text-slate-900 dark:text-[#F1F3F7]">{row.sku_name}</td>
-                    <td className="py-2.5 text-slate-700 dark:text-[#6C7693]">
-                      <span className="px-2 py-0.5 rounded-full bg-[#E2ECF5] border border-[#CBDCEB] dark:bg-[#090A0F] dark:border-[#222634] dark:text-[#6C7693] text-[10px] font-medium">
+                    <td className="py-2.5 text-slate-700 dark:text-[#6C7693] whitespace-nowrap">
+                      <span className="inline-block whitespace-nowrap px-2.5 py-0.5 rounded-full bg-[#E2ECF5] border border-[#CBDCEB] dark:bg-[#090A0F] dark:border-[#222634] dark:text-[#6C7693] text-[10px] font-medium">
                         {row.category}
                       </span>
                     </td>
@@ -298,17 +298,17 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
                     <td className="py-2.5 px-2 font-semibold text-slate-900 dark:text-[#F1F3F7]">{row.store_name}</td>
                     <td className="py-2.5 text-slate-600 dark:text-[#6C7693] font-medium">{row.city}</td>
                     <td className="py-2.5 font-semibold text-slate-900 dark:text-[#F1F3F7]">{row.sku_name}</td>
-                    <td className="py-2.5 text-slate-700 dark:text-[#6C7693]">
-                      <span className="px-2 py-0.5 rounded-full bg-[#E2ECF5] border border-[#CBDCEB] dark:bg-[#090A0F] dark:border-[#222634] dark:text-[#6C7693] text-[10px] font-medium">
+                    <td className="py-2.5 text-slate-700 dark:text-[#6C7693] whitespace-nowrap">
+                      <span className="inline-block whitespace-nowrap px-2.5 py-0.5 rounded-full bg-[#E2ECF5] border border-[#CBDCEB] dark:bg-[#090A0F] dark:border-[#222634] dark:text-[#6C7693] text-[10px] font-medium">
                         {row.category}
                       </span>
                     </td>
-                    <td className="py-2.5 text-right font-mono font-bold text-slate-900 dark:text-[#F1F3F7]">{row.stock_on_hand}</td>
-                    <td className="py-2.5 text-right font-mono text-slate-600 dark:text-[#6C7693]">{row.reorder_point}</td>
-                    <td className="py-2.5 text-right font-mono text-slate-600 dark:text-[#6C7693]">{row.safety_stock}</td>
-                    <td className="py-2.5 text-center px-2">
+                    <td className="py-2.5 text-right font-mono font-bold text-slate-900 dark:text-[#F1F3F7] whitespace-nowrap">{row.stock_on_hand}</td>
+                    <td className="py-2.5 text-right font-mono text-slate-600 dark:text-[#6C7693] whitespace-nowrap">{row.reorder_point}</td>
+                    <td className="py-2.5 text-right font-mono text-slate-600 dark:text-[#6C7693] whitespace-nowrap">{row.safety_stock}</td>
+                    <td className="py-2.5 text-center px-2 whitespace-nowrap">
                       <span
-                        className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${
+                        className={`inline-block whitespace-nowrap px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${
                           row.status === 'Critical'
                             ? 'bg-rose-500/10 text-rose-700 border-rose-500/20 dark:bg-[#F43F5E]/10 dark:text-[#F43F5E] dark:border-[#F43F5E]/30'
                             : row.status === 'Warning'

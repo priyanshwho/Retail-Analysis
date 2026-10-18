@@ -218,8 +218,8 @@ export const StoreCategoryPage: React.FC<StoreCategoryPageProps> = ({ filters })
                 <tr key={s.store_id} className="hover:bg-[#EBF2F7] dark:hover:bg-[#090A0F]/60 transition-colors">
                   <td className="py-2.5 px-2 font-mono text-slate-600 dark:text-[#6C7693]">#{s.store_id}</td>
                   <td className="py-2.5 font-semibold text-slate-800 dark:text-[#F1F3F7]">{s.store_name}</td>
-                  <td className="py-2.5 text-slate-700 dark:text-[#F1F3F7]">
-                    <span className="px-2 py-0.5 rounded-full bg-[#E2ECF5] border border-[#CBDCEB] text-slate-800 dark:bg-[#14161F] dark:border-[#222634] dark:text-[#F1F3F7] text-[10px] font-medium">
+                  <td className="py-2.5 text-slate-700 dark:text-[#F1F3F7] whitespace-nowrap">
+                    <span className="inline-block whitespace-nowrap px-2.5 py-0.5 rounded-full bg-[#E2ECF5] border border-[#CBDCEB] text-slate-800 dark:bg-[#14161F] dark:border-[#222634] dark:text-[#F1F3F7] text-[10px] font-medium">
                       {s.city}
                     </span>
                   </td>

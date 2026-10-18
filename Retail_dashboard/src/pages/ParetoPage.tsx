@@ -181,29 +181,29 @@ export const ParetoPage: React.FC<ParetoPageProps> = ({ filters }) => {
             <tbody className="divide-y divide-[#E2E8F0] dark:divide-[#222634]">
               {data.items.map((sku, idx) => (
                 <tr key={sku.sku_id} className="hover:bg-[#EBF2F7] dark:hover:bg-[#090A0F]/60 transition-colors">
-                  <td className="py-2.5 px-2 font-mono text-slate-600 dark:text-[#6C7693]">#{idx + 1}</td>
-                  <td className="py-2.5 font-semibold text-slate-900 dark:text-[#F1F3F7]">{sku.sku_name}</td>
-                  <td className="py-2.5 text-slate-700 dark:text-[#F1F3F7]">
-                    <span className="px-2 py-0.5 rounded-full bg-[#E2ECF5] border border-[#CBDCEB] dark:bg-[#14161F] dark:border-[#222634] text-slate-800 dark:text-[#F1F3F7] text-[10px] font-medium">
+                  <td className="py-2.5 px-2 font-mono text-slate-600 dark:text-[#6C7693] whitespace-nowrap">#{idx + 1}</td>
+                  <td className="py-2.5 font-semibold text-slate-900 dark:text-[#F1F3F7] whitespace-nowrap">{sku.sku_name}</td>
+                  <td className="py-2.5 text-slate-700 dark:text-[#F1F3F7] whitespace-nowrap">
+                    <span className="inline-block whitespace-nowrap px-2.5 py-0.5 rounded-full bg-[#E2ECF5] border border-[#CBDCEB] dark:bg-[#14161F] dark:border-[#222634] text-slate-800 dark:text-[#F1F3F7] text-[10px] font-medium">
                       {sku.category}
                     </span>
                   </td>
-                  <td className="py-2.5 text-right font-mono font-bold text-slate-900 dark:text-[#F1F3F7]">
+                  <td className="py-2.5 text-right font-mono font-bold text-slate-900 dark:text-[#F1F3F7] whitespace-nowrap">
                     {sku.revenue.toLocaleString()}
                   </td>
-                  <td className="py-2.5 text-right font-mono text-slate-600 dark:text-[#6C7693]">
+                  <td className="py-2.5 text-right font-mono text-slate-600 dark:text-[#6C7693] whitespace-nowrap">
                     {sku.cumulative_revenue.toLocaleString()}
                   </td>
-                  <td className="py-2.5 text-right font-mono text-indigo-600 dark:text-[#4F46E5] font-bold">
+                  <td className="py-2.5 text-right font-mono text-indigo-600 dark:text-[#4F46E5] font-bold whitespace-nowrap">
                     {sku.cumulative_percentage}%
                   </td>
-                  <td className="py-2.5 text-center px-2">
+                  <td className="py-2.5 text-center px-2 whitespace-nowrap">
                     {sku.is_top_80 ? (
-                      <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 border border-emerald-500/20 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/30 text-[10px] font-bold">
+                      <span className="inline-block whitespace-nowrap px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 border border-emerald-500/20 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/30 text-[10px] font-bold">
                         Top 80% Driver
                       </span>
                     ) : (
-                      <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 dark:bg-[#14161F] dark:text-[#6C7693] dark:border-[#222634] text-[10px] font-medium">
+                      <span className="inline-block whitespace-nowrap px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 dark:bg-[#14161F] dark:text-[#6C7693] dark:border-[#222634] text-[10px] font-medium">
                         Long Tail
                       </span>
                     )}
