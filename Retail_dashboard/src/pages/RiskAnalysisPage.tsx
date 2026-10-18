@@ -144,13 +144,13 @@ export const RiskAnalysisPage: React.FC = () => {
                 <th className="pb-3">Brand</th>
                 {activeTab !== 'low_stock' && (
                   <>
-                    <th className="pb-3 text-right">Sales Qty</th>
-                    <th className="pb-3 text-right">Revenue</th>
-                    <th className="pb-3 text-right">Profit</th>
+                    <th className="pb-3 px-3 text-right">Sales Qty</th>
+                    <th className="pb-3 px-3 text-right">Revenue</th>
+                    <th className="pb-3 px-3 text-right">Profit</th>
                   </>
                 )}
-                <th className="pb-3 text-right">Stock</th>
-                <th className="pb-3 text-right">Reorder Point</th>
+                <th className="pb-3 px-3 text-right">Stock</th>
+                <th className="pb-3 px-3 text-right">Reorder Point</th>
                 <th className="pb-3 px-3">Diagnostic Reason</th>
               </tr>
             </thead>
@@ -167,21 +167,21 @@ export const RiskAnalysisPage: React.FC = () => {
                   <td className="py-3 text-slate-400">{item.brand}</td>
                   {activeTab !== 'low_stock' && (
                     <>
-                      <td className="py-3 text-right font-mono font-medium text-slate-200">
+                      <td className="py-3 px-3 text-right font-mono font-medium text-slate-200">
                         {item.total_sales_quantity?.toLocaleString()}
                       </td>
-                      <td className="py-3 text-right font-mono text-slate-200">
+                      <td className="py-3 px-3 text-right font-mono text-slate-200">
                         {item.total_revenue?.toLocaleString()}
                       </td>
-                      <td className="py-3 text-right font-mono text-emerald-400 font-medium">
+                      <td className="py-3 px-3 text-right font-mono text-emerald-400 font-medium">
                         {item.total_profit?.toLocaleString()}
                       </td>
                     </>
                   )}
-                  <td className="py-3 text-right font-mono font-bold text-rose-400">
+                  <td className="py-3 px-3 text-right font-mono font-bold text-rose-400">
                     {item.stock_on_hand?.toLocaleString()}
                   </td>
-                  <td className="py-3 text-right font-mono text-slate-400">
+                  <td className="py-3 px-3 text-right font-mono text-slate-400">
                     {item.reorder_point?.toLocaleString()}
                   </td>
                   <td className="py-3 px-3 text-slate-300 max-w-xs text-[11px] leading-tight">
