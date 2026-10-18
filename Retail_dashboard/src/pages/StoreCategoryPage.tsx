@@ -61,25 +61,6 @@ export const StoreCategoryPage: React.FC<StoreCategoryPageProps> = ({ filters })
     return <LoadingState message="Loading store & category analytics..." />;
   }
 
-  return (
-    <div className="space-y-8 animate-fadeIn">
-      {/* City & Format Summary Row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* City Comparison */}
-        <ChartCard
-          title="Regional City Performance"
-          subtitle="Revenue & profit distribution across emirates"
-        >
-          <div className="h-64 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={storeData.cities} margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="city" stroke="#64748b" tick={{ fontSize: 11 }} />
-                <YAxis
-                  stroke="#64748b"
-                  tick={{ fontSize: 11 }}
-                  tickFormatter={(v) => `${(v / 1_000_000).toFixed(1)}M`}
-                />
   const tooltipStyle = {
     backgroundColor: isDark ? '#0f172a' : '#ffffff',
     borderColor: isDark ? '#334155' : '#cbdceb',

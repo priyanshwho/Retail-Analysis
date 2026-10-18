@@ -57,46 +57,58 @@ export const ParetoPage: React.FC<ParetoPageProps> = ({ filters }) => {
     cumPct: item.cumulative_percentage,
   }));
 
+  const tooltipStyle = {
+    backgroundColor: isDark ? '#0f172a' : '#ffffff',
+    borderColor: isDark ? '#334155' : '#cbdceb',
+    borderRadius: '12px',
+    fontSize: '12px',
+    color: isDark ? '#f8fafc' : '#0f172a',
+    boxShadow: isDark ? '0 10px 25px -5px rgba(0,0,0,0.5)' : '0 10px 25px -5px rgba(15,23,42,0.1)',
+  };
+
+  const gridColor = isDark ? '#1e293b' : '#e2e8f0';
+  const axisColor = isDark ? '#94a3b8' : '#475569';
+
   return (
     <div className="space-y-8 animate-fadeIn">
       {/* Pareto Principle Summary Header */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-        <div className="glass-panel p-6 rounded-2xl border border-indigo-500/30 bg-indigo-950/20">
-          <div className="flex items-center gap-2 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-2">
+        <div className="glass-panel p-6 rounded-2xl border border-indigo-200 dark:border-indigo-500/30 bg-indigo-50/70 dark:bg-indigo-950/20">
+          <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-400 text-xs font-bold uppercase tracking-wider mb-2">
             <Award className="w-4 h-4" /> Vital Few Catalog Drivers
           </div>
-          <div className="text-3xl font-extrabold text-white">
+          <div className="text-3xl font-extrabold text-slate-900 dark:text-white">
             {data.top_80_skus_count}{' '}
-            <span className="text-sm font-normal text-slate-400">
+            <span className="text-sm font-semibold text-slate-600 dark:text-slate-400">
               / {data.total_skus} SKUs
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-2">
-            Just <span className="text-indigo-300 font-bold">{data.top_80_skus_percentage}%</span> of catalog products generate 80% of total commercial revenue.
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">
+            Just <span className="text-indigo-700 dark:text-indigo-300 font-bold">{data.top_80_skus_percentage}%</span> of catalog products generate 80% of total commercial revenue.
           </p>
         </div>
 
-        <div className="glass-panel p-6 rounded-2xl border border-slate-800">
-          <div className="flex items-center gap-2 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">
+        <div className="glass-panel p-6 rounded-2xl border border-[#DCE5EF] dark:border-slate-800">
+          <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2">
             <Zap className="w-4 h-4" /> Total Evaluated Revenue
           </div>
-          <div className="text-3xl font-extrabold text-white font-mono">
+          <div className="text-3xl font-extrabold text-slate-900 dark:text-white font-mono">
             {data.total_revenue.toLocaleString()}
           </div>
-          <p className="text-xs text-slate-400 mt-2">
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">
             Aggregated gross value across {data.total_skus} catalog items.
           </p>
         </div>
 
-        <div className="glass-panel p-6 rounded-2xl border border-slate-800">
-          <div className="flex items-center gap-2 text-amber-400 text-xs font-semibold uppercase tracking-wider mb-2">
+        <div className="glass-panel p-6 rounded-2xl border border-[#DCE5EF] dark:border-slate-800">
+          <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 text-xs font-bold uppercase tracking-wider mb-2">
             <Layers className="w-4 h-4" /> Long Tail SKUs
           </div>
-          <div className="text-3xl font-extrabold text-white">
+          <div className="text-3xl font-extrabold text-slate-900 dark:text-white">
             {data.total_skus - data.top_80_skus_count}{' '}
-            <span className="text-sm font-normal text-slate-400">SKUs</span>
+            <span className="text-sm font-semibold text-slate-600 dark:text-slate-400">SKUs</span>
           </div>
-          <p className="text-xs text-slate-400 mt-2">
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-2 font-medium">
             Remaining long-tail products drive only the final 20% of revenue.
           </p>
         </div>
@@ -110,26 +122,21 @@ export const ParetoPage: React.FC<ParetoPageProps> = ({ filters }) => {
         <div className="h-96 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <ComposedChart data={chartData} margin={{ top: 15, right: 20, left: 10, bottom: 20 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+              <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
               <XAxis
                 dataKey="rank"
-                stroke="#64748b"
+                stroke={axisColor}
                 tick={{ fontSize: 11 }}
-                label={{ value: 'SKU Revenue Rank (1 to 200)', position: 'insideBottom', offset: -10, fill: '#64748b', fontSize: 11 }}
+                label={{ value: 'SKU Revenue Rank (1 to 200)', position: 'insideBottom', offset: -10, fill: axisColor, fontSize: 11 }}
               />
               <YAxis
-                stroke="#64748b"
+                stroke={axisColor}
                 domain={[0, 100]}
                 tick={{ fontSize: 11 }}
                 tickFormatter={(v) => `${v}%`}
               />
               <Tooltip
-                contentStyle={{
-                  backgroundColor: '#0f172a',
-                  borderColor: '#334155',
-                  borderRadius: '12px',
-                  fontSize: '12px',
-                }}
+                contentStyle={tooltipStyle}
                 formatter={(val: unknown, name: unknown) => [
                   String(name) === 'Cumulative %' ? `${val}%` : Number(val).toLocaleString(),
                   String(name),
@@ -157,7 +164,7 @@ export const ParetoPage: React.FC<ParetoPageProps> = ({ filters }) => {
       >
         <div className="overflow-x-auto max-h-[500px]">
           <table className="w-full text-left text-xs">
-            <thead className="sticky top-0 bg-slate-900 border-b border-slate-800 text-slate-400 uppercase tracking-wider font-semibold">
+            <thead className="sticky top-0 bg-[#F0F4F8] dark:bg-slate-900 border-b border-[#D9E3EE] dark:border-slate-800 text-slate-700 dark:text-slate-300 uppercase tracking-wider font-bold">
               <tr>
                 <th className="py-3 px-2">Rank</th>
                 <th className="py-3">SKU Name</th>
@@ -168,32 +175,32 @@ export const ParetoPage: React.FC<ParetoPageProps> = ({ filters }) => {
                 <th className="py-3 text-center px-2">Classification</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60">
+            <tbody className="divide-y divide-[#E2E8F0] dark:divide-slate-800/60">
               {data.items.map((sku, idx) => (
-                <tr key={sku.sku_id} className="hover:bg-slate-800/40 transition-colors">
-                  <td className="py-2.5 px-2 font-mono text-slate-400">#{idx + 1}</td>
-                  <td className="py-2.5 font-semibold text-slate-200">{sku.sku_name}</td>
-                  <td className="py-2.5 text-slate-300">
-                    <span className="px-2 py-0.5 rounded-full bg-slate-800 border border-slate-700 text-[10px]">
+                <tr key={sku.sku_id} className="hover:bg-[#EBF2F7] dark:hover:bg-slate-800/40 transition-colors">
+                  <td className="py-2.5 px-2 font-mono text-slate-600 dark:text-slate-400">#{idx + 1}</td>
+                  <td className="py-2.5 font-semibold text-slate-900 dark:text-slate-200">{sku.sku_name}</td>
+                  <td className="py-2.5 text-slate-700 dark:text-slate-300">
+                    <span className="px-2 py-0.5 rounded-full bg-[#E2ECF5] border border-[#CBDCEB] dark:bg-slate-800 dark:border-slate-700 text-slate-800 dark:text-slate-300 text-[10px] font-medium">
                       {sku.category}
                     </span>
                   </td>
-                  <td className="py-2.5 text-right font-mono font-medium text-slate-200">
+                  <td className="py-2.5 text-right font-mono font-bold text-slate-900 dark:text-slate-100">
                     {sku.revenue.toLocaleString()}
                   </td>
-                  <td className="py-2.5 text-right font-mono text-slate-400">
+                  <td className="py-2.5 text-right font-mono text-slate-600 dark:text-slate-400">
                     {sku.cumulative_revenue.toLocaleString()}
                   </td>
-                  <td className="py-2.5 text-right font-mono text-indigo-400 font-bold">
+                  <td className="py-2.5 text-right font-mono text-indigo-600 dark:text-indigo-400 font-bold">
                     {sku.cumulative_percentage}%
                   </td>
                   <td className="py-2.5 text-center px-2">
                     {sku.is_top_80 ? (
-                      <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-semibold">
+                      <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 border border-emerald-500/20 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/30 text-[10px] font-bold">
                         Top 80% Driver
                       </span>
                     ) : (
-                      <span className="px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-[10px]">
+                      <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700 text-[10px] font-medium">
                         Long Tail
                       </span>
                     )}

@@ -132,24 +132,24 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
   return (
     <div className="space-y-6 animate-fadeIn">
       {/* View Switcher & Action Bar */}
-      <div className="glass-panel p-4 rounded-2xl border border-slate-800 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-2 bg-slate-950 p-1 rounded-xl border border-slate-800">
+      <div className="glass-panel p-4 rounded-2xl border border-[#DCE5EF] dark:border-slate-800 flex flex-wrap items-center justify-between gap-4">
+        <div className="flex items-center gap-2 bg-[#E2ECF5] dark:bg-slate-950 p-1 rounded-xl border border-[#CBDCEB] dark:border-slate-800">
           <button
             onClick={() => setView('sales')}
-            className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               view === 'sales'
                 ? 'bg-indigo-600 text-white shadow-sm'
-                : 'text-slate-400 hover:text-slate-200'
+                : 'text-slate-700 hover:text-slate-950 dark:text-slate-400 dark:hover:text-slate-200'
             }`}
           >
             Sales Transactions (641K)
           </button>
           <button
             onClick={() => setView('inventory')}
-            className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+            className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
               view === 'inventory'
                 ? 'bg-indigo-600 text-white shadow-sm'
-                : 'text-slate-400 hover:text-slate-200'
+                : 'text-slate-700 hover:text-slate-950 dark:text-slate-400 dark:hover:text-slate-200'
             }`}
           >
             Inventory Snapshots (8.7K)
@@ -164,7 +164,7 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
                 setInvStatus(e.target.value);
                 setInvPage(1);
               }}
-              className="bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
+              className="bg-white dark:bg-slate-950 border border-[#CBDCEB] dark:border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500 font-medium"
             >
               <option value="">All Health Statuses</option>
               <option value="Critical">Critical (≤ Safety)</option>
@@ -176,7 +176,7 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
 
           <button
             onClick={exportCurrentTable}
-            className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-200 hover:bg-slate-700 transition-colors border border-slate-700"
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-[#E2ECF5] text-slate-700 hover:text-slate-950 hover:bg-[#D4E3F0] transition-colors border border-[#CBDCEB] dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700 dark:border-slate-700 cursor-pointer"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Export CSV</span>
@@ -194,49 +194,49 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
         >
           <div className="overflow-x-auto min-h-[460px]">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-900 border-b border-slate-800 text-slate-400 uppercase tracking-wider font-semibold">
+              <thead className="bg-[#F0F4F8] dark:bg-slate-900 border-b border-[#D9E3EE] dark:border-slate-800 text-slate-700 dark:text-slate-300 uppercase tracking-wider font-bold">
                 <tr>
-                  <th className="py-3 px-2 cursor-pointer hover:text-slate-200" onClick={() => handleSort('id')}>
+                  <th className="py-3 px-2 cursor-pointer hover:text-slate-950 dark:hover:text-white" onClick={() => handleSort('id')}>
                     <span className="flex items-center gap-1">ID <ArrowUpDown className="w-3 h-3" /></span>
                   </th>
-                  <th className="py-3 cursor-pointer hover:text-slate-200" onClick={() => handleSort('date')}>
+                  <th className="py-3 cursor-pointer hover:text-slate-950 dark:hover:text-white" onClick={() => handleSort('date')}>
                     <span className="flex items-center gap-1">Date <ArrowUpDown className="w-3 h-3" /></span>
                   </th>
                   <th className="py-3">Store</th>
                   <th className="py-3">Product SKU</th>
                   <th className="py-3">Category</th>
-                  <th className="py-3 text-right cursor-pointer hover:text-slate-200" onClick={() => handleSort('quantity')}>
+                  <th className="py-3 text-right cursor-pointer hover:text-slate-950 dark:hover:text-white" onClick={() => handleSort('quantity')}>
                     <span className="flex items-center justify-end gap-1">Qty <ArrowUpDown className="w-3 h-3" /></span>
                   </th>
                   <th className="py-3 text-right">Unit Price</th>
-                  <th className="py-3 text-right cursor-pointer hover:text-slate-200" onClick={() => handleSort('total_value')}>
+                  <th className="py-3 text-right cursor-pointer hover:text-slate-950 dark:hover:text-white" onClick={() => handleSort('total_value')}>
                     <span className="flex items-center justify-end gap-1">Total Rev <ArrowUpDown className="w-3 h-3" /></span>
                   </th>
-                  <th className="py-3 text-right cursor-pointer hover:text-slate-200" onClick={() => handleSort('profit')}>
+                  <th className="py-3 text-right cursor-pointer hover:text-slate-950 dark:hover:text-white" onClick={() => handleSort('profit')}>
                     <span className="flex items-center justify-end gap-1">Profit <ArrowUpDown className="w-3 h-3" /></span>
                   </th>
                   <th className="py-3">Channel</th>
                   <th className="py-3 text-right px-2">Disc %</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60">
+              <tbody className="divide-y divide-[#E2E8F0] dark:divide-slate-800/60">
                 {salesData.items.map((row) => (
-                  <tr key={row.id} className="hover:bg-slate-800/40 transition-colors">
-                    <td className="py-2.5 px-2 font-mono text-slate-400">#{row.id}</td>
-                    <td className="py-2.5 font-mono text-slate-300">{row.date}</td>
-                    <td className="py-2.5 font-medium text-slate-200">{row.store_name}</td>
-                    <td className="py-2.5 font-medium text-slate-200">{row.sku_name}</td>
-                    <td className="py-2.5 text-slate-400">
-                      <span className="px-2 py-0.5 rounded-full bg-slate-800 border border-slate-700 text-[10px]">
+                  <tr key={row.id} className="hover:bg-[#EBF2F7] dark:hover:bg-slate-800/40 transition-colors">
+                    <td className="py-2.5 px-2 font-mono text-slate-600 dark:text-slate-400">#{row.id}</td>
+                    <td className="py-2.5 font-mono text-slate-700 dark:text-slate-300">{row.date}</td>
+                    <td className="py-2.5 font-semibold text-slate-900 dark:text-slate-200">{row.store_name}</td>
+                    <td className="py-2.5 font-semibold text-slate-900 dark:text-slate-200">{row.sku_name}</td>
+                    <td className="py-2.5 text-slate-700 dark:text-slate-300">
+                      <span className="px-2 py-0.5 rounded-full bg-[#E2ECF5] border border-[#CBDCEB] dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 text-[10px] font-medium">
                         {row.category}
                       </span>
                     </td>
-                    <td className="py-2.5 text-right font-mono text-slate-300">{row.quantity}</td>
-                    <td className="py-2.5 text-right font-mono text-slate-400">{row.unit_price}</td>
-                    <td className="py-2.5 text-right font-mono font-medium text-slate-100">{row.total_value}</td>
-                    <td className="py-2.5 text-right font-mono text-emerald-400 font-semibold">{row.profit}</td>
-                    <td className="py-2.5 text-slate-300">{row.channel}</td>
-                    <td className="py-2.5 text-right px-2 font-mono text-slate-400">
+                    <td className="py-2.5 text-right font-mono text-slate-700 dark:text-slate-300">{row.quantity}</td>
+                    <td className="py-2.5 text-right font-mono text-slate-600 dark:text-slate-400">{row.unit_price}</td>
+                    <td className="py-2.5 text-right font-mono font-bold text-slate-900 dark:text-slate-100">{row.total_value}</td>
+                    <td className="py-2.5 text-right font-mono text-emerald-600 dark:text-emerald-400 font-bold">{row.profit}</td>
+                    <td className="py-2.5 text-slate-700 dark:text-slate-300">{row.channel}</td>
+                    <td className="py-2.5 text-right px-2 font-mono text-slate-600 dark:text-slate-400">
                       {row.discount_pct !== null ? `${row.discount_pct}%` : '0%'}
                     </td>
                   </tr>
@@ -246,23 +246,23 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
           </div>
 
           {/* Pagination bar */}
-          <div className="flex items-center justify-between pt-4 mt-4 border-t border-slate-800 text-xs text-slate-400">
+          <div className="flex items-center justify-between pt-4 mt-4 border-t border-[#D9E3EE] dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 font-medium">
             <div>
-              Page <span className="font-semibold text-slate-200">{salesData.page}</span> of{' '}
-              <span className="font-semibold text-slate-200">{salesData.total_pages}</span>
+              Page <span className="font-bold text-slate-900 dark:text-slate-200">{salesData.page}</span> of{' '}
+              <span className="font-bold text-slate-900 dark:text-slate-200">{salesData.total_pages}</span>
             </div>
             <div className="flex items-center gap-2">
               <button
                 disabled={salesData.page <= 1}
                 onClick={() => setSalesPage(salesData.page - 1)}
-                className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 transition-colors"
+                className="p-1.5 rounded-lg bg-[#E2ECF5] hover:bg-[#D4E3F0] text-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 disabled:opacity-40 transition-colors cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 disabled={salesData.page >= salesData.total_pages}
                 onClick={() => setSalesPage(salesData.page + 1)}
-                className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 transition-colors"
+                className="p-1.5 rounded-lg bg-[#E2ECF5] hover:bg-[#D4E3F0] text-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 disabled:opacity-40 transition-colors cursor-pointer"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -276,7 +276,7 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
         >
           <div className="overflow-x-auto min-h-[460px]">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-900 border-b border-slate-800 text-slate-400 uppercase tracking-wider font-semibold">
+              <thead className="bg-[#F0F4F8] dark:bg-slate-900 border-b border-[#D9E3EE] dark:border-slate-800 text-slate-700 dark:text-slate-300 uppercase tracking-wider font-bold">
                 <tr>
                   <th className="py-3 px-2">Store</th>
                   <th className="py-3">City</th>
@@ -288,30 +288,30 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
                   <th className="py-3 text-center px-2">Stock Health</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60">
+              <tbody className="divide-y divide-[#E2E8F0] dark:divide-slate-800/60">
                 {invData.items.map((row, idx) => (
-                  <tr key={`${row.store_id}-${row.sku_id}-${idx}`} className="hover:bg-slate-800/40 transition-colors">
-                    <td className="py-2.5 px-2 font-medium text-slate-200">{row.store_name}</td>
-                    <td className="py-2.5 text-slate-400">{row.city}</td>
-                    <td className="py-2.5 font-semibold text-slate-200">{row.sku_name}</td>
-                    <td className="py-2.5 text-slate-400">
-                      <span className="px-2 py-0.5 rounded-full bg-slate-800 border border-slate-700 text-[10px]">
+                  <tr key={`${row.store_id}-${row.sku_id}-${idx}`} className="hover:bg-[#EBF2F7] dark:hover:bg-slate-800/40 transition-colors">
+                    <td className="py-2.5 px-2 font-semibold text-slate-900 dark:text-slate-200">{row.store_name}</td>
+                    <td className="py-2.5 text-slate-600 dark:text-slate-400 font-medium">{row.city}</td>
+                    <td className="py-2.5 font-semibold text-slate-900 dark:text-slate-200">{row.sku_name}</td>
+                    <td className="py-2.5 text-slate-700 dark:text-slate-300">
+                      <span className="px-2 py-0.5 rounded-full bg-[#E2ECF5] border border-[#CBDCEB] dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 text-[10px] font-medium">
                         {row.category}
                       </span>
                     </td>
-                    <td className="py-2.5 text-right font-mono font-bold text-slate-100">{row.stock_on_hand}</td>
-                    <td className="py-2.5 text-right font-mono text-slate-400">{row.reorder_point}</td>
-                    <td className="py-2.5 text-right font-mono text-slate-400">{row.safety_stock}</td>
+                    <td className="py-2.5 text-right font-mono font-bold text-slate-900 dark:text-slate-100">{row.stock_on_hand}</td>
+                    <td className="py-2.5 text-right font-mono text-slate-600 dark:text-slate-400">{row.reorder_point}</td>
+                    <td className="py-2.5 text-right font-mono text-slate-600 dark:text-slate-400">{row.safety_stock}</td>
                     <td className="py-2.5 text-center px-2">
                       <span
-                        className={`px-2 py-0.5 rounded-full text-[10px] font-semibold border ${
+                        className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${
                           row.status === 'Critical'
-                            ? 'bg-rose-500/20 text-rose-300 border-rose-500/30'
+                            ? 'bg-rose-500/10 text-rose-700 border-rose-500/20 dark:bg-rose-500/20 dark:text-rose-300 dark:border-rose-500/30'
                             : row.status === 'Warning'
-                            ? 'bg-amber-500/20 text-amber-300 border-amber-500/30'
+                            ? 'bg-amber-500/10 text-amber-700 border-amber-500/20 dark:bg-amber-500/20 dark:text-amber-300 dark:border-amber-500/30'
                             : row.status === 'Overstocked'
-                            ? 'bg-purple-500/20 text-purple-300 border-purple-500/30'
-                            : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+                            ? 'bg-purple-500/10 text-purple-700 border-purple-500/20 dark:bg-purple-500/20 dark:text-purple-300 dark:border-purple-500/30'
+                            : 'bg-emerald-500/10 text-emerald-700 border-emerald-500/20 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/30'
                         }`}
                       >
                         {row.status}
@@ -324,23 +324,23 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
           </div>
 
           {/* Pagination bar */}
-          <div className="flex items-center justify-between pt-4 mt-4 border-t border-slate-800 text-xs text-slate-400">
+          <div className="flex items-center justify-between pt-4 mt-4 border-t border-[#D9E3EE] dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 font-medium">
             <div>
-              Page <span className="font-semibold text-slate-200">{invData.page}</span> of{' '}
-              <span className="font-semibold text-slate-200">{invData.total_pages}</span>
+              Page <span className="font-bold text-slate-900 dark:text-slate-200">{invData.page}</span> of{' '}
+              <span className="font-bold text-slate-900 dark:text-slate-200">{invData.total_pages}</span>
             </div>
             <div className="flex items-center gap-2">
               <button
                 disabled={invData.page <= 1}
                 onClick={() => setInvPage(invData.page - 1)}
-                className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 transition-colors"
+                className="p-1.5 rounded-lg bg-[#E2ECF5] hover:bg-[#D4E3F0] text-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 disabled:opacity-40 transition-colors cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 disabled={invData.page >= invData.total_pages}
                 onClick={() => setInvPage(invData.page + 1)}
-                className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-40 transition-colors"
+                className="p-1.5 rounded-lg bg-[#E2ECF5] hover:bg-[#D4E3F0] text-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-200 disabled:opacity-40 transition-colors cursor-pointer"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
