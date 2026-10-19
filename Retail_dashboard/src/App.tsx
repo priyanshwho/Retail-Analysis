@@ -3,7 +3,7 @@ import { Sidebar } from './components/layout/Sidebar';
 import type { NavTab } from './components/layout/Sidebar';
 import { Header } from './components/layout/Header';
 import { FilterBar } from './components/ui/FilterBar';
-import { LoadingState } from './components/ui/LoadingState';
+import { OverviewSkeleton, DashboardSkeleton } from './components/ui/Skeleton';
 import { ErrorBoundary } from './components/ui/ErrorBoundary';
 import { AlertTriangle, RotateCcw } from 'lucide-react';
 
@@ -138,9 +138,9 @@ export const App: React.FC = () => {
 
         <main className="flex-1 p-4 sm:p-8">
           <ErrorBoundary>
-            <Suspense fallback={<LoadingState message="Loading view module..." />}>
+            <Suspense fallback={<DashboardSkeleton tab={activeTab} />}>
               {activeTab === 'overview' &&
-                (overviewData ? (
+                (overviewData && !isLoading ? (
                   <OverviewPage data={overviewData} />
                 ) : error ? (
                   <div className="flex flex-col items-center justify-center min-h-[420px] text-center p-8 bg-[#EAF0F6] dark:bg-slate-900/60 border border-[#CBDCEB] dark:border-slate-800 rounded-2xl max-w-lg mx-auto mt-12 shadow-xl shadow-black/5 dark:shadow-black/40">
@@ -164,7 +164,7 @@ export const App: React.FC = () => {
                     </button>
                   </div>
                 ) : (
-                  <LoadingState message="Connecting to Neon & compiling overview..." />
+                  <OverviewSkeleton />
                 ))}
 
               {activeTab === 'sales' && <SalesAnalyticsPage filters={filters} />}

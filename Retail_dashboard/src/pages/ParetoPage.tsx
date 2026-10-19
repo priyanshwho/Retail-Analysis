@@ -13,7 +13,7 @@ import { Award, Zap, Layers } from 'lucide-react';
 import { api } from '../services/api';
 import type { ParetoResponse, ActiveFilters } from '../types';
 import { ChartCard } from '../components/ui/ChartCard';
-import { LoadingState } from '../components/ui/LoadingState';
+import { ParetoSkeleton } from '../components/ui/Skeleton';
 import { useTheme } from '../context/useTheme';
 
 interface ParetoPageProps {
@@ -49,7 +49,7 @@ export const ParetoPage: React.FC<ParetoPageProps> = ({ filters }) => {
   }, [filters]);
 
   if (loading || !data) {
-    return <LoadingState message="Calculating 80/20 cumulative revenue distribution..." />;
+    return <ParetoSkeleton />;
   }
 
   const chartData = data.items.map((item, index) => ({

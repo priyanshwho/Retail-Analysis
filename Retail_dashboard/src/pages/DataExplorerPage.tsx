@@ -14,7 +14,7 @@ import type {
   ActiveFilters,
 } from '../types';
 import { ChartCard } from '../components/ui/ChartCard';
-import { LoadingState } from '../components/ui/LoadingState';
+import { DataExplorerTableSkeleton } from '../components/ui/Skeleton';
 
 interface DataExplorerPageProps {
   filters: ActiveFilters;
@@ -190,7 +190,7 @@ export const DataExplorerPage: React.FC<DataExplorerPageProps> = ({ filters }) =
 
       {/* Main Table Content */}
       {loading ? (
-        <LoadingState message={`Fetching ${view} records from Neon database...`} />
+        <DataExplorerTableSkeleton view={view} />
       ) : view === 'sales' && salesData ? (
         <ChartCard
           title={`Sales Transaction Ledger (${salesData.total.toLocaleString()} total entries)`}

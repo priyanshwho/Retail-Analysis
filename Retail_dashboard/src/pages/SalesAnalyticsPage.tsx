@@ -14,7 +14,7 @@ import {
 import { api } from '../services/api';
 import type { SalesTrendPoint, ActiveFilters } from '../types';
 import { ChartCard } from '../components/ui/ChartCard';
-import { LoadingState } from '../components/ui/LoadingState';
+import { SalesAnalyticsSkeleton } from '../components/ui/Skeleton';
 import { useTheme } from '../context/useTheme';
 
 interface SalesAnalyticsPageProps {
@@ -48,7 +48,7 @@ export const SalesAnalyticsPage: React.FC<SalesAnalyticsPageProps> = ({ filters 
     };
   }, [granularity, filters]);
 
-  if (loading) return <LoadingState message="Aggregating sales timeline data..." />;
+  if (loading) return <SalesAnalyticsSkeleton />;
 
   const totalRevenue = data.reduce((acc, curr) => acc + curr.revenue, 0);
   const totalProfit = data.reduce((acc, curr) => acc + curr.profit, 0);

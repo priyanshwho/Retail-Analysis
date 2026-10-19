@@ -18,7 +18,7 @@ import type {
   ActiveFilters,
 } from '../types';
 import { ChartCard } from '../components/ui/ChartCard';
-import { LoadingState } from '../components/ui/LoadingState';
+import { StoreCategorySkeleton } from '../components/ui/Skeleton';
 import { useTheme } from '../context/useTheme';
 
 interface StoreCategoryPageProps {
@@ -59,7 +59,7 @@ export const StoreCategoryPage: React.FC<StoreCategoryPageProps> = ({ filters })
   }, [filters]);
 
   if (loading || !storeData) {
-    return <LoadingState message="Loading store & category analytics..." />;
+    return <StoreCategorySkeleton />;
   }
 
   const tooltipStyle = {

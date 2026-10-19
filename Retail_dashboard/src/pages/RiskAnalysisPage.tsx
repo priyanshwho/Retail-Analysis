@@ -8,7 +8,7 @@ import {
 import { api } from '../services/api';
 import type { RiskAnalysisResponse } from '../types';
 import { ChartCard } from '../components/ui/ChartCard';
-import { LoadingState } from '../components/ui/LoadingState';
+import { RiskAnalysisSkeleton } from '../components/ui/Skeleton';
 
 export const RiskAnalysisPage: React.FC = () => {
   const [data, setData] = useState<RiskAnalysisResponse | null>(null);
@@ -36,7 +36,7 @@ export const RiskAnalysisPage: React.FC = () => {
   }, []);
 
   if (loading || !data) {
-    return <LoadingState message="Running risk analysis algorithms across 641,000+ sales and inventory..." />;
+    return <RiskAnalysisSkeleton />;
   }
 
   const { high_sales_low_stock, low_stock, high_sales_low_profit } = data;
