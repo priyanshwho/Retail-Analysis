@@ -9,8 +9,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (saved === 'light' || saved === 'dark') {
       return saved;
     }
-    // Default to dark for executive view or check system preference
-    return window.matchMedia?.('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    // Default to light theme for deployed site and new visitors
+    return 'light';
   });
 
   useEffect(() => {
