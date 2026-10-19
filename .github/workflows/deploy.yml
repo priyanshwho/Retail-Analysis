@@ -26,6 +26,7 @@ jobs:
           port: ${{ secrets.ORACLE_PORT || 22 }}
           script: |
             set -e
+            export PATH="/home/priyanshu/.local/bin:$PATH"
 
             echo "🚀 [1/5] Navigating to repository..."
             cd /home/priyanshu/Retail-Analysis
@@ -37,10 +38,9 @@ jobs:
             echo "📦 [3/5] Updating Python virtual environment..."
             cd backend
             source .venv/bin/activate
-            pip install --no-cache-dir -r requirements.txt
+            uv pip install -r requirements.txt || pip install --no-cache-dir -r requirements.txt
 
             echo "🔄 [4/5] Restarting retail-backend via PM2..."
-            export PATH="/home/priyanshu/.local/bin:$PATH"
             pm2 restart retail-backend || pm2 start ecosystem.config.cjs
 
             echo "🩺 [5/5] Checking service health..."
