@@ -1,315 +1,137 @@
-# BlueMart Retail Intelligence | Enterprise BI & Data Analytics Case Study
+# BlueMart Retail Intelligence
+[Live Demo](https://retail-bi.priyanshu.cv/) | [API Documentation](https://api-retail-bi.priyanshu.cv/docs) | [GitHub Repository](https://github.com/priyanshwho/Retail-Analysis)
 
-[![Live Application](https://img.shields.io/badge/Live_Dashboard-retail--bi.priyanshu.cv-4F46E5?style=for-the-badge&logo=vercel)](https://retail-bi.priyanshu.cv)
-[![API Engine](https://img.shields.io/badge/FastAPI_Backend-api--retail--bi.priyanshu.cv-059669?style=for-the-badge&logo=fastapi)](https://api-retail-bi.priyanshu.cv/docs)
-[![Python Analysis](https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python)](https://github.com/priyanshwho/Retail-Analysis)
-[![Database](https://img.shields.io/badge/Neon_Postgres-641K+_Transactions-00E599?style=for-the-badge&logo=postgresql)](https://neon.tech)
+Enterprise retail business intelligence and diagnostic analytics platform turning 641K+ transactional records into automated inventory and profit intelligence.
 
 ---
 
-## 1. Executive Summary & Project Overview
+### DOMAIN
+Retail Analytics / Business Intelligence / Supply Chain & E-Commerce
 
-**BlueMart Retail Intelligence** is an end-to-end commercial Business Intelligence and Data Science platform developed for a multi-store supermarket chain operating across the United Arab Emirates (**Dubai**, **Abu Dhabi**, and **Sharjah**). 
-
-The primary business objective was to transform **641,843 granular transaction records**, **200 catalog SKUs**, **50 brick-and-mortar retail outlets**, and **8,735 inventory snapshots** into actionable operational intelligence. 
-
-### Key Business Metrics at a Glance
-| Metric | Analyzed Value | Business Context |
-| :--- | :--- | :--- |
-| **Total Commercial Revenue** | **$73,209,783** (~73.2M AED) | Aggregated gross sales across all retail channels |
-| **Total Gross Profit** | **$21,097,014** (~21.1M AED) | Net revenue minus Cost of Goods Sold (COGS) |
-| **Overall Profit Margin** | **28.82%** | Average profitability ratio across 200 catalog SKUs |
-| **Total Units Moved** | **1,677,126 units** | Physical sales volume moved through supply chain |
-| **Transaction Volume** | **641,843 orders** | Individual retail basket records |
-| **Active Retail Network** | **50 stores in 3 Emirates** | 28 Dubai, 14 Abu Dhabi, 8 Sharjah |
-| **Omnichannel Footprint** | **5 Sales Channels** | Physical Stores, Website, Mobile App, Amazon.ae, Noon |
+### SCALE & METRICS
+641,843 Transactions | 50 Stores | $73.2M Revenue | 8,735 Inventory Snapshots
 
 ---
 
-## 2. In-Depth Data Science & Exploratory Analysis (`retail-analysis`)
+## Overview
 
-The core analytical engine was engineered inside the [`retail-analysis`](./retail-analysis) module using Python (Pandas, NumPy, Matplotlib, Seaborn). The workflow follows rigorous data analyst methodologies: **Data Quality Auditing**, **Schema Normalization**, **Relational Modeling**, **Management Question Resolution**, and **Ad-Hoc Diagnostic Risk Modeling**.
+**BlueMart Retail Intelligence** is an end-to-end commercial Business Intelligence and Data Analytics platform built for a supermarket chain operating 50 stores across the United Arab Emirates (**Dubai**, **Abu Dhabi**, and **Sharjah**). The platform aggregates and models **641,843 sales transactions**, **200 catalog SKUs**, and **8,735 inventory snapshots**, transforming raw point-of-sale ledgers into real-time executive visibility, gross margin analytics, and predictive inventory alerts.
 
-```
-retail-analysis/
-├── dataset/
-│   ├── bm_sales.csv         # 641,843 sales records (32.7 MB)
-│   ├── bm_skus.csv          # 200 catalog product lines with cost & price
-│   ├── bm_stores.csv        # 50 retail store locations and formats
-│   └── bm_inventory.csv     # 8,735 daily store-SKU stock snapshots
-├── Retail.ipynb             # Full Jupyter Notebook with 85 analytical cells
-└── pyproject.toml           # Python 3.12 environment specification
-```
+Retail enterprises face massive operational friction from fragmented sales channels, stockout hazards on high-velocity items, and silent margin erosion caused by aggressive discounting. BlueMart solves these challenges through a unified analytics system: from exploratory data science in Python to a sub-second analytical REST API and a high-performance executive dashboard with zero-layout-shift skeleton loading for both light and dark themes.
 
 ---
 
-### 2.1 Raw Data Schema & Entities
+## Key Features
 
-```mermaid
-erDiagram
-    STORES ||--o{ SALES : "generates"
-    SKUS ||--o{ SALES : "sold_in"
-    STORES ||--o{ INVENTORY : "holds"
-    SKUS ||--o{ INVENTORY : "stocked_as"
-
-    STORES {
-        int store_id PK
-        string store_name
-        string city "Dubai | Abu Dhabi | Sharjah"
-        string store_type "Mall | High Street | Community"
-        date opening_date
-    }
-
-    SKUS {
-        int sku_id PK
-        string sku_name
-        string category "Electronics | FMCG | Household | etc."
-        string subcategory
-        string brand "Premium | Budget | BlueMart | Local | Intl"
-        decimal unit_price
-        decimal cost_price
-    }
-
-    SALES {
-        int id PK
-        date date
-        int store_id FK
-        int sku_id FK
-        int customer_id "Nullable (Walk-ins)"
-        int quantity
-        decimal unit_price
-        decimal total_value
-        decimal discount_pct
-        string channel "Store | Web | App | Amazon | Noon"
-    }
-
-    INVENTORY {
-        int store_id FK
-        int sku_id FK
-        int stock_on_hand
-        int reorder_point
-        int safety_stock
-        date last_restock_date
-        date snapshot_date
-    }
-```
+- **Executive Performance Scorecard**: Real-time aggregation of **$73.2M total revenue**, **$21.1M gross profit** (28.8% net margin), and **1.67M units moved** across all 50 operational outlets.
+- **Omnichannel Revenue Attribution**: Comprehensive sales channel breakdown tracking revenue split across Physical Stores (41.3%), Website (27.7%), Mobile App (17.9%), Amazon.ae (8.8%), and Noon (4.3%).
+- **Diagnostic Stockout Hazard Engine**: Algorithmic quadrant model detecting high-velocity products (`sales > median`) with depleted stock buffers (`stock_on_hand < median`) to prevent lost sales.
+- **Margin Leakage & Discount Auditing**: Automated identification of high-volume SKUs suffering margin degradation due to excessive discounting or supplier pricing mismatches.
+- **Pareto 80/20 Catalog Engine**: Cumulative revenue curve identifying the exact **41 SKUs (20.5% of catalog)** that generate **80% of total commercial revenue**.
+- **Granular Ledger Explorer**: Searchable, sortable transaction explorer indexing 641,000+ sales entries and daily inventory health states with instant CSV report generation.
+- **Zero-Layout-Shift Skeleton Architecture**: Custom-engineered dual-theme (light/dark) skeleton loading system mirroring the exact geometry of cards, charts, and tables for an instant, fluid user experience.
 
 ---
 
-### 2.2 Data Quality Assessment & Hygiene Pipeline
+## Data Science & Analytics Deep Dive (`retail-analysis`)
 
-Before running statistical aggregations, a comprehensive quality assessment was executed on the raw transaction tables:
+The foundational intelligence was designed and validated in Python (`retail-analysis/Retail.ipynb`), addressing core business hypotheses and five central management questions.
 
-1. **Missing Value Auditing (`.isnull().sum()`)**:
-   - `bm_sales.csv`: Missing values were identified solely in `customer_id` (159,821 null values out of 641,843). 
-   - *Business Interpretation*: Retail supermarket walk-in shoppers frequently transact via cash/card at POS terminals without registering for membership loyalty cards. These were preserved as valid point-of-sale transactions rather than discarded.
-   - `bm_skus.csv`, `bm_stores.csv`, `bm_inventory.csv`: Zero missing attributes (100% complete).
-2. **De-duplication (`.drop_duplicates()`)**:
-   - 28 duplicate transaction rows were identified and removed, preventing artificial inflation of sales volume.
-3. **Temporal Standardization (`pd.to_datetime`)**:
-   - Both `sales['date']` and `stores['opening_date']` were coerced from ISO strings to datetime indices to enable vectorized time-series monthly and seasonal aggregations.
-4. **Referential Integrity Validation**:
-   - Verified that $100\%$ of `store_id` references in sales existed within `bm_stores.csv` (`sdf['store_id'].isin(stdf['store_id']).all() == True`).
-   - Verified that $100\%$ of `sku_id` references existed within `bm_skus.csv` (`sdf['sku_id'].isin(pdf['sku_id']).all() == True`).
+### 1. Data Schema & Hygiene Pipeline
+- **Dataset Scale**: 
+  - `bm_sales.csv`: 641,843 sales transaction records ($32.7\text{ MB}$).
+  - `bm_skus.csv`: 200 catalog products with detailed unit costs, retail prices, categories, and brands.
+  - `bm_stores.csv`: 50 retail locations across 3 Emirates (`Dubai`: 28, `Abu Dhabi`: 14, `Sharjah`: 8) across 3 formats (`Mall`: 22, `High Street`: 18, `Community`: 10).
+  - `bm_inventory.csv`: 8,735 store-SKU snapshots recording stock-on-hand, reorder thresholds, and safety stock.
+- **Data Quality Assessment**:
+  - Identified 159,821 null values in `customer_id` representing anonymous POS cash/card walk-in shoppers; preserved these to maintain accurate revenue and inventory depletion counts.
+  - De-duplicated 28 duplicate transaction rows to prevent artificial volume inflation.
+  - Standardized timestamps to datetime objects for vectorized monthly and seasonal grouping.
+  - Verified 100% referential integrity between foreign keys (`store_id` and `sku_id`) across tables.
 
----
+### 2. Feature Engineering & Unit Economics
+Synthesized an analytics-ready master dataset by joining transactional sales with product catalog economics:
+$$\text{COGS} = \text{quantity} \times \text{cost\_price}$$
+$$\text{Gross Profit} = \text{total\_value} - \text{COGS}$$
+$$\text{Profit Margin \%} = \left(\frac{\text{Gross Profit}}{\text{total\_value}}\right) \times 100$$
 
-### 2.3 Feature Engineering & Relational Master Merge
+### 3. Five Big Management Questions Resolved
 
-Because transactional sales records only track `quantity` and `total_value`, calculating true commercial profitability required joining unit economics from the product catalog:
+#### Q1: Revenue Trajectory & Seasonality
+- Stable baseline sales volume averaging **~3.0M to 3.2M AED monthly revenue**.
+- Recurring revenue surges coinciding with regional festive periods (Ramadan, Eid al-Fitr, and Q4 Dubai Shopping Festival).
+- Gross profit margin maintained a resilient corridor between **28.2% and 29.4%**, indicating disciplined promotional discounting.
 
-```python
-# Relational Left Joins to synthesize single Analytics-Ready Master Dataset
-df = pd.merge(sdf, pdf, on='sku_id', how='left')
-df = pd.merge(df, stdf, on='store_id', how='left')
-
-# Feature Engineering Financial Metrics
-df['cogs'] = df['quantity'] * df['cost_price']
-df['profit'] = df['total_value'] - df['cogs']
-df['profit_margin_pct'] = (df['profit'] / df['total_value']) * 100
-```
-
----
-
-## 3. Resolving the 5 Big Management Questions
-
-### Q1: How Are Sales & Revenue Evolving Over Time?
-- **Seasonality & Trajectory**: Analyzed monthly sales trends aggregated over a 24-month horizon.
-- **Findings**:
-  - Stable baseline of **~3.0M to 3.2M AED monthly revenue**.
-  - Recurring quarterly spikes coinciding with regional festive periods (Ramadan, Eid, and Q4 Dubai Shopping Festival).
-  - Profit trajectory closely mirrors gross sales with a consistent margin band oscillating between **28.2% and 29.4%**, indicating disciplined discounting without catastrophic price erosion.
-
----
-
-### Q2: Which Merchandise Categories Generate the Highest Sales & Margin?
-
-| Category | Total Sales (AED) | Total Profit (AED) | Profit Margin | Strategic Role |
+#### Q2: Category Sales & Margin Performance
+| Category | Total Sales (AED) | Total Profit (AED) | Profit Margin | Key Finding |
 | :--- | :--- | :--- | :--- | :--- |
-| **Electronics** | **40,790,950.89** | **11,848,265.14** | **29.05%** | **Core Revenue & Profit Engine** (55.7% of total revenue) |
-| **Household** | **8,190,735.92** | **2,360,418.07** | **28.82%** | High-ticket recurring utility basket driver |
-| **Personal Care** | **8,181,799.29** | **2,115,959.34** | **25.86%** | High volume, consistent recurring footfall |
-| **Grocery** | **5,564,702.41** | **1,661,022.56** | **29.85%** | Essential daily staple with strong basket attachment |
-| **Snacks** | **4,321,275.25** | **1,299,444.11** | **30.07%** | High impulse margin category (>30%) |
-| **Dairy** | **4,238,161.64** | **1,237,884.73** | **29.21%** | Perishable, high-frequency velocity driver |
-| **Beverages** | **1,922,157.59** | **574,416.61** | **29.88%** | Complementary bundle item |
+| **Electronics** | **40,790,950.89** | **11,848,265.14** | **29.05%** | **Core Revenue Anchor (55.7% of total revenue)** |
+| **Household** | **8,190,735.92** | **2,360,418.07** | **28.82%** | High basket-size stability |
+| **Personal Care** | **8,181,799.29** | **2,115,959.34** | **25.86%** | High volume, consistent footfall driver |
+| **Grocery** | **5,564,702.41** | **1,661,022.56** | **29.85%** | High repeat frequency staple |
+| **Snacks** | **4,321,275.25** | **1,299,444.11** | **30.07%** | Highest impulse margin category |
+| **Dairy** | **4,238,161.64** | **1,237,884.73** | **29.21%** | Fast inventory turnover, perishable |
+| **Beverages** | **1,922,157.59** | **574,416.61** | **29.88%** | High bundle attachment rate |
 
-> **Key Analytical Takeaway**: Electronics alone represents over **55.7% of all retail revenue** and **56.1% of gross profit**. Optimizing electronics supplier contracts and warranty attachments delivers disproportionate bottom-line expansion.
+#### Q3: Brand & Product Profitability
+- **Brand Rankings**:
+  1. **`Premium`**: Top dollar contributor (**24.56M AED Sales**, **7.21M AED Profit**, **29.36% Margin** across 477,247 units).
+  2. **`Budget`**: High volume tier (**15.24M AED Sales**, **4.27M AED Profit**, **28.04% Margin**).
+  3. **`BlueMart` (Private Label)**: Highest margin efficiency (**11.28M AED Sales**, **3.37M AED Profit**, **29.85% Margin**).
+- **Top 2 Most Profitable SKUs**:
+  - `Electronics_Batteries_1035` (Premium): **768.5K AED Profit** (39.04% margin).
+  - `Electronics_Mobile Accessories_1174` (Premium): **690.0K AED Profit** (37.27% margin).
+  - All top 10 most profitable products were within the **Electronics** category (Batteries, Cables, Accessories, and Chargers).
 
----
+#### Q4: Store & Regional Geographic Performance
+- **Regional Split**: Dubai captures **58.2%** of retail revenue, Abu Dhabi **28.5%**, and Sharjah **13.3%**.
+- **Top Stores**: `BlueMart Store 41` (1.50M AED), `Store 11` (1.49M AED), `Store 49` (1.49M AED).
+- **Store Formats**:
+  - **Mall Outlets (22 Stores)**: Highest electronics sales volume and largest average order value.
+  - **High Street Outlets (18 Stores)**: Highest local weekday footfall and delivery dispatch density.
+  - **Community Stores (10 Stores)**: Strongest repeat customer loyalty and highest Grocery/Dairy basket share.
 
-### Q3: Which Brands & Products are the Most Profitable?
+#### Q5: Omnichannel Revenue Attribution
+- **In-Store**: **$30.23M (41.29%)** — Core margin anchor with zero third-party take rates.
+- **Website**: **$20.30M (27.73%)** — Direct-to-consumer digital portal capturing first-party customer telemetry.
+- **Mobile App**: **$13.10M (17.89%)** — Highest customer retention and repeat purchase cadence.
+- **Amazon.ae**: **$6.47M (8.84%)** & **Noon**: **$3.11M (4.25%)** — High-reach discovery channels with platform commissions.
 
-#### Brand Hierarchy
-1. **`Premium`** (#1 Performer):
-   - **Sales**: 24.56 Million AED | **Profit**: 7.21 Million AED | **Margin**: **29.36%** | **Units Sold**: 477,247
-   - Delivers highest absolute dollar volume.
-2. **`Budget`**:
-   - **Sales**: 15.24 Million AED | **Profit**: 4.27 Million AED | **Margin**: **28.04%** | **Units Sold**: 360,255
-3. **`BlueMart` (Private Label Store Brand)**:
-   - **Sales**: 11.28 Million AED | **Profit**: 3.37 Million AED | **Margin**: **29.85%** (Highest margin tier alongside Premium).
-   - *Strategic Insight*: Expanding BlueMart private label into Snacks and Household directly increases enterprise margin by avoiding third-party licensing fees.
-
-#### Top 5 Most Profitable Individual SKUs
-| SKU Name | Category | Brand | Total Sales (AED) | Total Profit (AED) | Profit Margin |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **`Electronics_Batteries_1035`** | Electronics | Premium | 1,968,289.04 | **768,459.36** | **39.04%** |
-| **`Electronics_Mobile Accessories_1174`** | Electronics | Premium | 1,851,457.18 | **689,974.72** | **37.27%** |
-| **`Electronics_Cables_1078`** | Electronics | Local | 1,403,360.74 | **552,599.02** | **39.38%** |
-| **`Electronics_Cables_1199`** | Electronics | Premium | 1,788,582.29 | **541,907.96** | **30.30%** |
-| **`Electronics_Batteries_1173`** | Electronics | Budget | 1,252,212.27 | **511,288.77** | **40.83%** |
-
----
-
-### Q4: Which Stores, Formats & Cities Perform Best?
-
-```mermaid
-pie title UAE Retail Network Revenue Contribution by City
-    "Dubai (28 Stores)" : 58.2
-    "Abu Dhabi (14 Stores)" : 28.5
-    "Sharjah (8 Stores)" : 13.3
-```
-
-- **Top Store**: `BlueMart Store 41` (**1.50M AED** revenue), closely followed by `Store 11` (1.49M) and `Store 49` (1.49M).
-- **Format Breakdown**:
-  - **Mall Outlets (22 Stores)**: Generate highest average basket size and premium electronics volume.
-  - **High Street Outlets (18 Stores)**: Consistent weekday footfall and highest omnichannel delivery dispatch density.
-  - **Community Stores (10 Stores)**: Strongest repeat loyalty and highest FMCG/Grocery basket contribution.
+### 4. Diagnostic Risk Modeling & Ad-Hoc Analytics
+- **Stockout Hazard Engine**: Flagged high-selling consumable electronics where stock on hand was below median, averting supply disruptions during high-demand peaks.
+- **Margin Leakage Detection**: Pinpointed products with high sales volume but sub-median profits (e.g., `Dairy_Cream_1015`, `Grocery_Rice_1121` at <14.3% margin), recommending minimum markup thresholds and private-label substitution.
+- **Pareto Principle Validation**: Proved that **41 SKUs (20.5% of total catalog)** deliver **80% of company revenue**, enabling leadership to focus supply chain priority and safety stock on the vital few.
 
 ---
 
-### Q5: Omnichannel Revenue Contribution
+## Core Full-Stack Architecture
 
-| Channel | Total Revenue (AED) | Share of Revenue | Operational Strategic Insight |
-| :--- | :--- | :--- | :--- |
-| **Physical Store** | **30,227,603.54** | **41.29%** | Primary anchor, highest margin, zero marketplace commission |
-| **Direct Website** | **20,299,836.60** | **27.73%** | High-growth digital storefront with full customer data capture |
-| **Mobile App** | **13,097,435.70** | **17.89%** | Highest retention, repeat order frequency, and push notification LTV |
-| **Amazon.ae** | **6,470,717.92** | **8.84%** | High volume customer acquisition channel (carries 10-15% platform take rate) |
-| **Noon** | **3,114,189.23** | **4.25%** | Regional marketplace presence targeting hyper-local fast delivery |
+### Backend & Data Pipeline
+- **FastAPI (Python 3.12)**: Asynchronous REST engine structured with modular routers (`/overview`, `/analytics`, `/explorer`).
+- **Neon Serverless PostgreSQL**: Cloud database storing 641,843 sales transactions with PgBouncer connection pooling executing complex aggregations in **<50ms**.
+- **Production Infrastructure**: Hosted on an **Oracle Cloud Infrastructure (OCI)** Ubuntu server with **PM2** process management, automated crash recovery, and **Caddy** automated SSL reverse proxy.
 
----
-
-## 4. Advanced Diagnostic & Ad-Hoc Inventory Analysis
-
-Moving beyond descriptive KPIs, the study developed diagnostic models integrating inventory snapshot ledgers (`bm_inventory.csv`):
-
-### 4.1 Stockout Hazard Engine (High Demand / Low Stock)
-Identifies catalog items with rapid velocity but dangerous buffer depletion:
-$$\text{Hazard Criterion} = \left(\text{sales\_qty} > \text{median}(\text{sales\_qty})\right) \land \left(\text{stock\_on\_hand} < \text{median}(\text{stock\_on\_hand})\right)$$
-- **Impact**: Flagged critical SKUs across fast-moving consumable electronics (batteries and charging cables) at risk of stockouts during month-end surges.
-
-### 4.2 Reorder Point Violations (`stock_on_hand < reorder_point`)
-- Evaluated daily stock positions against dynamic threshold triggers:
-  $$\text{Reorder Trigger} = \text{Lead Time Demand} + \text{Safety Stock}$$
-- Identified stores with localized inventory exhaustion despite network-wide surplus, demonstrating the need for **inter-store stock balancing**.
-
-### 4.3 Margin Leakage Detection (High Sales Volume / Low Net Profit)
-Flagged catalog products that consume warehouse capacity and shipping bandwidth but contribute sub-optimal margins due to heavy promotions or manufacturer pricing:
-$$\text{Margin Leak Criterion} = \left(\text{sales\_value} > \text{median}\right) \land \left(\text{profit} < \text{median}\right)$$
-- **Identified Items**:
-  - `Dairy_Cream_1015` (Sales: 216.9K | Profit: 53.0K)
-  - `Grocery_Canned Goods_1029` (Sales: 221.3K | Profit: 53.2K)
-  - `Grocery_Pasta_1196` (Sales: 240.5K | Profit: 56.5K)
-  - `Grocery_Rice_1121` (Sales: 252.1K | Profit: 36.2K — margin under 14.3%)
-- **Recommendation**: Implement minimum advertised price (MAP) policies and replace low-margin third-party staples with **BlueMart Private Label** alternatives.
+### Frontend & BI Dashboard
+- **React 19 & TypeScript**: Component-driven SPA optimized with lazy-loaded route splitting.
+- **Tailwind CSS & Recharts**: Custom glassmorphism aesthetic with responsive data visualizations (composed line/bar trends, donut distributions, city comparison matrices).
+- **Exact-Geometry Skeleton Loading**: Handcrafted skeleton placeholders matching the exact height, shape, and grid layout of cards and charts in both light and dark themes, eliminating layout shifts.
 
 ---
 
-### 4.4 Pareto 80/20 Distribution Curve
-Conducted cumulative ranking of the entire catalog to isolate the "Vital Few" from the "Trivial Many":
+## Technologies & Tools
 
-```
-Cumulative Revenue % = sum(revenue[1..k]) / Total Commercial Revenue
-```
-
-- **Result**: Exactly **41 SKUs (20.5% of the catalog)** generate **80.0% of total commercial revenue**.
-- **Management Application**: Concentrated inventory priority, supplier SLAs, and premium shelf allocation on these 41 vital revenue drivers while rationalizing slow-moving tail SKUs.
+- **Data Science & Analytics**: Python 3.12, Pandas, NumPy, Matplotlib, Seaborn, Jupyter Notebook
+- **Database & Query Optimization**: PostgreSQL, Neon Cloud Serverless, PgBouncer, SQLAlchemy
+- **Backend Architecture**: FastAPI, Uvicorn, PM2, Caddy Server, REST APIs
+- **Frontend & Visualization**: React 19, TypeScript, Vite, Tailwind CSS, Recharts, Lucide Icons
+- **Deployment & Cloud Infrastructure**: Oracle Cloud Infrastructure (OCI), Vercel Edge Platform, Git/GitHub
 
 ---
 
-## 5. Core Backend Engineering (Architecture & API)
+## My Role & Impact
 
-To serve the analytics at interactive sub-second speed, a production REST API was implemented in Python.
-
-### System Architecture
-```
-FastAPI Router -> Dependency Injection -> SQLAlchemy ORM -> Neon PgBouncer Pool -> Neon PostgreSQL
-```
-
-- **Framework**: **FastAPI** (Python 3.12) running under **Uvicorn** with 2 worker processes managed by **PM2** on Oracle Cloud Infrastructure Ubuntu Server.
-- **Database**: **Neon Serverless PostgreSQL** hosting 641,843 sales rows, normalized relational indexes on `(store_id, sku_id, date)`.
-- **Query Optimization**: High-frequency aggregations (`GROUP BY store_id`, `GROUP BY date`, `SUM(total_value)`) compiled via PostgreSQL CTEs and pooled connections via PgBouncer.
-- **CORS & Reverse Proxy**: Reverse-proxied through **Caddy** with automated TLS certificates:
-  - Base Endpoint: `https://api-retail-bi.priyanshu.cv/api`
-  - Health Endpoint: `/api/health`
-  - Analytical Endpoints:
-    - `GET /api/overview` — High-level enterprise scorecard & channel split
-    - `GET /api/analytics/sales-trend?granularity=month` — Dynamic time-series grouping
-    - `GET /api/analytics/stores` — 50-store leaderboard & city comparisons
-    - `GET /api/analytics/risk` — Algorithmic stockout & margin leak flags
-    - `GET /api/analytics/pareto` — 80/20 cumulative distribution points
-    - `GET /api/explorer/sales` — Paginated ledger of 641,000+ individual baskets with column sorting
-
----
-
-## 6. Core Frontend & Dashboard Experience
-
-Built using modern web technologies focused on executive clarity, zero layout shift, and responsive accessibility:
-
-- **Technology**: **React 19**, **TypeScript**, **Vite 8**, **Tailwind CSS**, **Recharts 3**, **Lucide Icons**.
-- **Hosted On**: **Vercel Edge Platform** (`https://retail-bi.priyanshu.cv`).
-- **Exact Shape & Size Skeleton Loading**:
-  - Zero Layout Shift (CLS = 0) state transitions.
-  - Skeletons mirror exact geometric boundaries (KPI cards, composed charts, donut rings, multi-column data tables).
-  - Fully adaptive dual-theme palette:
-    - **Light Theme**: Soft `#E2ECF5` base with translucent white luminous shimmer.
-    - **Dark Theme**: Deep `#1A1F2D` base with subtle indigo/slate sheen.
-- **Responsive Layout**: Multi-breakpoint grid collapsing gracefully from 4-column 4K desktop to single-column mobile viewports.
-- **Granular Data Explorer**: Full pagination, CSV export capabilities, and multi-dimensional filter bar (Store, Category, City, Date Range).
-
----
-
-## 7. Business Impact & Strategic Recommendations
-
-1. **Protect the 41 Pareto Drivers**:
-   - Establish automated restock triggers for the top 20% SKUs (primarily Premium Electronics).
-   - Guarantee 99.5% on-shelf availability to safeguard 80% of top-line revenue.
-2. **Eliminate FMCG Margin Leaks**:
-   - Re-evaluate promotional discounts on high-velocity, low-profit staples (Rice, Pasta, Canned Goods).
-   - Introduce bundle pricing combining high-margin snacks/confectionery with essential grocery staples.
-3. **Incentivize Direct Channel Migration**:
-   - Marketplace platforms (Amazon.ae & Noon) contribute 13.1% of sales but incur commission fees.
-   - Offer loyalty app cash-back rewards to convert third-party marketplace shoppers into direct **BlueMart Mobile App** subscribers.
-4. **Inter-Store Inventory Redistribution**:
-   - Implement weekly balancing transfers between Dubai hub stores and outlying Sharjah community locations to clear surplus before reorder triggers fire.
-
----
-
-## 8. Author & Repository Links
-
-- **Author**: Priyanshu
-- **Live Production URL**: [https://retail-bi.priyanshu.cv](https://retail-bi.priyanshu.cv)
-- **API Documentation**: [https://api-retail-bi.priyanshu.cv/docs](https://api-retail-bi.priyanshu.cv/docs)
-- **GitHub Repository**: [https://github.com/priyanshwho/Retail-Analysis](https://github.com/priyanshwho/Retail-Analysis)
-- **Jupyter Notebook**: [retail-analysis/Retail.ipynb](./retail-analysis/Retail.ipynb)
+- **End-to-End Data Analysis**: Cleaned, audited, and modeled **641,843 transaction records** and **8,735 inventory snapshots** in Python, establishing actionable retail KPIs.
+- **Strategic Business Problem Solving**: Addressed the 5 fundamental executive management questions, uncovering that Electronics accounts for 55.7% of gross sales and identifying 41 Pareto SKUs driving 80% of enterprise revenue.
+- **Inventory & Risk Engine Design**: Engineered diagnostic models for stockout detection and margin leak prevention, enabling data-backed replenishment schedules.
+- **High-Performance Architecture**: Architected a production FastAPI backend on Oracle Cloud with PgBouncer connection pooling achieving sub-50ms query times over 641K records.
+- **Executive Frontend Delivery**: Built a responsive, dual-theme React 19 dashboard deployed on Vercel with tailored skeleton loading for seamless executive presentation.
