@@ -28,5 +28,7 @@ Thumbs.db
 *.sln
 *.sw?
 
-# Plan file (internal use)
+# Plan & Deployment docs (internal use)
 IMPLEMENTATION_PLAN.md
+BACKEND_DEPLOYMENT.md
+

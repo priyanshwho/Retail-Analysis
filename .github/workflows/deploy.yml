@@ -39,14 +39,13 @@ jobs:
             source .venv/bin/activate
             pip install --no-cache-dir -r requirements.txt
 
-            echo "🔄 [4/5] Restarting retail-backend systemd user service..."
-            export XDG_RUNTIME_DIR="/run/user/$(id -u)"
-            export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
-            systemctl --user restart retail-backend
+            echo "🔄 [4/5] Restarting retail-backend via PM2..."
+            export PATH="/home/priyanshu/.local/bin:$PATH"
+            pm2 restart retail-backend || pm2 start ecosystem.config.cjs
 
             echo "🩺 [5/5] Checking service health..."
             sleep 2
-            systemctl --user status retail-backend --no-pager
+            pm2 status retail-backend
             curl -s -f http://127.0.0.1:8005/api/health || {
               echo "❌ Health check failed after restart!"
               exit 1
