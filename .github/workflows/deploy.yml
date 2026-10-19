@@ -1,0 +1,55 @@
+name: CI/CD Deployment to Oracle Server
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'backend/**'
+      - '.github/workflows/deploy.yml'
+
+jobs:
+  deploy:
+    name: Deploy Backend to Oracle Server
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: SSH to Oracle Server & Deploy
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.ORACLE_HOST }}
+          username: ${{ secrets.ORACLE_USER }}
+          key: ${{ secrets.ORACLE_SSH_KEY }}
+          port: ${{ secrets.ORACLE_PORT || 22 }}
+          script: |
+            set -e
+
+            echo "🚀 [1/5] Navigating to repository..."
+            cd /home/priyanshu/Retail-Analysis
+
+            echo "📥 [2/5] Fetching latest changes from main..."
+            git fetch origin main
+            git reset --hard origin/main
+
+            echo "📦 [3/5] Updating Python virtual environment..."
+            cd backend
+            source .venv/bin/activate
+            pip install --no-cache-dir -r requirements.txt
+
+            echo "🔄 [4/5] Restarting retail-backend systemd user service..."
+            export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+            export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
+            systemctl --user restart retail-backend
+
+            echo "🩺 [5/5] Checking service health..."
+            sleep 2
+            systemctl --user status retail-backend --no-pager
+            curl -s -f http://127.0.0.1:8005/api/health || {
+              echo "❌ Health check failed after restart!"
+              exit 1
+            }
+
+            echo "✅ Deployment successful! Retail backend is live on port 8005."
