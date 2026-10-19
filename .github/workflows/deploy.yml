@@ -32,8 +32,8 @@ jobs:
             cd /home/priyanshu/Retail-Analysis
 
             echo "📥 [2/5] Fetching latest changes from main..."
-            git fetch origin main
-            git reset --hard origin/main
+            git fetch https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git main
+            git reset --hard FETCH_HEAD
 
             echo "📦 [3/5] Updating Python virtual environment..."
             cd backend
